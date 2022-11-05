@@ -3,7 +3,7 @@ title: "Debunking the Kubie \"energy saving device\""
 subtitle: ""
 author: "JorisL"
 author-url: 'https://blog.jorisl.nl'
-date: "2021-08-22"
+date: "August '21"
 ---
 
 Last week someone asked me to take a look if this
