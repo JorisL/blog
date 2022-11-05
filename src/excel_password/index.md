@@ -1,6 +1,5 @@
 ---
 title: "Recovering password protected Excel files using Emacs"
-subtitle: "..."
 author: "JorisL"
 author-url: 'https://blog.jorisl.nl'
 date: "2022-06-18"
