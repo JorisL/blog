@@ -21,7 +21,12 @@ subtitle: ""
 Mechatronics engineer, juggler, off-road unicyclist, boardgame enthausiast,
 metalhead, ...
 
-Links:
+<figure class="wide full-width">
+<img src="img/main.jpg" />
+<figcaption> ... </figcaption>
+</figure>
+
+## Links:
 
 | [GitHub](https://github.com/JorisL) |   |   |
 | ----------------------------------- | - | - |
