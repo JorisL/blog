@@ -103,7 +103,7 @@ language server (and if wanted `black` to be the code formatter), and make sure
 to **not** use hardcoded file paths for these. Otherwise when hardcoded paths
 are used it will not use the .venv versions when needed.
 
-An example of this is shown below[^1]:
+An example of this is shown below[^1][^2]:
 
 ```{.toml .numberLines}
 [[language]]
@@ -116,7 +116,7 @@ auto-format = true
 [^1]: see <https://github.com/JorisL/helix> for my latest configuration,
 including settings to set a max. line length for both formatting and linting.
 
-Note: this is where we also must configure some LSP and formatter related
+[^2]: This is where we also must configure some LSP and formatter related
 settings, for example max. line lengths, since these are not read from the
 poetry's `pyproject.toml` configuration file. According to the Helix
 documentation it should be possible to include a `languages.toml` settings file
@@ -149,10 +149,10 @@ virtual environment enabled we should see this path change to something like
 
 Now, when we want to edit files from the given poetry project we need to start a
 terminal in the root folder of the poetry project, and then enable the virtual
-environment. If we then run `hx` within that terminal[^2] it will use the
+environment. If we then run `hx` within that terminal[^3] it will use the
 project's pylsp server instead of the system's pylsp server.
 
-[^2]: An added benefit of running hx within this terminal is that the working
+[^3]: An added benefit of running hx within this terminal is that the working
 directory of Helix is now the project's working directory. Now commands like
 `<space> f` will only search for files within the project.
 
