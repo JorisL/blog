@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="JorisL" />
+  <meta name="dcterms.date" content="2022-06-18" />
+  <title>Recovering password protected Excel files using Emacs</title>
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/skylighting-solarized-theme.css" />
+</head>
+<body>
+
+<header>
+<h1 class="title">Recovering password protected Excel files using Emacs</h1>
+<blockquote class="metadata">
+<p class="subtitle">…</p>
+<p class="author">
+      <a href="https://blog.jorisl.nl">JorisL</a>
+  </p>
+<p class="date before-toc"><time datetime="2022-06-18">2022-06-18</time></p>
+</blockquote>
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <strong>Contents</strong><label for="contents">⊕</label>
+  <input type="checkbox" id="contents">
+  <ul>
+  <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+  <li><a href="#exploring-excel-files" id="toc-exploring-excel-files">Exploring Excel files</a></li>
+  <li><a href="#automating-the-password-removal-process" id="toc-automating-the-password-removal-process">Automating the password removal process</a></li>
+  </ul>
+</nav>
+
+<main>
+<h1 id="introduction">Introduction</h1>
+<p>A while ago I received an Excel file where many of the formulas and calculations where locked and made invisible using. <a href="https://support.microsoft.com/en-au/office/require-a-password-to-open-or-modify-a-workbook-10579f0e-b2d9-4c05-b9f8-4109a6bce643">password protected sheets</a> The password was lost, making it “impossible” to view the formulas making up the Excel file; only the resulting values. With this password-protected functionality it is still possible to open the file without password. Also; the values in protected cells are still updated when modifying one of the unprotected cells its formula references to. Therefore the formulas behind the cells should also still be unencrypted by a password.</p>
+<p>A quick search on the internet at the time (stackoverflow, superuser, etc.) did not get me an answer for how I could recover the file. But with a bit of poking-around in the .xlsx file by myself I was able to disable this protection.</p>
+<p>This post describes how I was able to find and disable this protection. As an example for this post, I’ve prepared <a href="../files/excel_password/locked_example.xlsx">this sheet protected Excel file</a>. This excel file has a single formula in cell A1, but the sheet protection has been set up such that you need to provide the correct password in order to change, or even see the formula behind, the cell.</p>
+<figure>
+<img src="../img/excel_password/locked.png" alt="Password protected Excel file, where only the value from cell A1 is visible, but not the underlying formula." />
+<figcaption aria-hidden="true">Password protected Excel file, where only the value from cell A1 is visible, but not the underlying formula.</figcaption>
+</figure>
+<h1 id="exploring-excel-files">Exploring Excel files</h1>
+<p>After not finding a simple answer for disabling this password protection I went looking around in the .xlsx file myself. One of the things I remembered having read somewhere in the past was that .xlsx files are actually just .zip archives. Therefore, we can just rename the file extention of our .xlsx file to .zip, excract the archive, and explore its contents.</p>
+<p>For our example file this archive mostly consists of .xml files, describing various parts and properties in the workbook, but for larger Excel files it could also contain various images, videos, and other embedded files. Since this simple example file practically only consists of .xml files it is likely that the info we’re looking for is in one of those files. Normally I would edit these in Emacs, and with that program we already have a trick up our sleeve. Emacs has a <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/File-Archives.html">build-in mode</a> to edit text files within archives, without the need to unarchive the file yourself. This can be used to edit text files in regular .zip or .tar archives, but also in files like Java .jar and Excel .xlsx files which are actually archives with a different file extention.</p>
+<p>So; let’s open our example .xlsx file in Emacs:</p>
+<pre><code>M Filemode      Length  Date         Time      File
+- ----------  --------  -----------  --------  ---------------------------------------
+  -rw-rw-rw-      1276   1-Jan-1980  00:00:00  [Content_Types].xml
+  -rw-rw-rw-       588   1-Jan-1980  00:00:00  _rels/.rels
+  -rw-rw-rw-      2212   1-Jan-1980  00:00:00  xl/workbook.xml
+  -rw-rw-rw-       690   1-Jan-1980  00:00:00  xl/_rels/workbook.xml.rels
+  -rw-rw-rw-      1480   1-Jan-1980  00:00:00  xl/worksheets/sheet1.xml
+  -rw-rw-rw-      8390   1-Jan-1980  00:00:00  xl/theme/theme1.xml
+  -rw-rw-rw-      2313   1-Jan-1980  00:00:00  xl/styles.xml
+  -rw-rw-rw-       322   1-Jan-1980  00:00:00  xl/worksheets/_rels/sheet1.xml.rels
+  -rw-rw-rw-      5420   1-Jan-1980  00:00:00  xl/printerSettings/printerSettings1.bin
+  -rw-rw-rw-       169   1-Jan-1980  00:00:00  xl/calcChain.xml
+  -rw-rw-rw-       625   1-Jan-1980  00:00:00  docProps/core.xml
+  -rw-rw-rw-       785   1-Jan-1980  00:00:00  docProps/app.xml
+- ----------  --------  -----------  --------  ---------------------------------------
+                 24270                         12 files</code></pre>
+<p>When opening an .xlsx file in Emacs, it is automatically opened as an explorable .zip file. Here we see the different .xml files representing different parts of the Excel file. In this case the example file only has one worksheet, in <code>xl/worksheets/sheet1.xml</code>. Lets open it to see the information stored for this sheet:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource xml numberLines"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="ot"> encoding=</span><span class="st">&quot;UTF-8&quot;</span><span class="ot"> standalone=</span><span class="st">&quot;yes&quot;</span><span class="fu">?&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>&lt;<span class="kw">worksheet</span><span class="ot"> xmlns=</span><span class="st">&quot;http://schemas.openxmlformats.org/spreadsheetml/2006/main&quot;</span><span class="ot"> xmlns:r=</span><span class="st">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;</span><span class="ot"> xmlns:mc=</span><span class="st">&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><span class="ot"> mc:Ignorable=</span><span class="st">&quot;x14ac xr xr2 xr3&quot;</span><span class="ot"> xmlns:x14ac=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac&quot;</span><span class="ot"> xmlns:xr=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2014/revision&quot;</span><span class="ot"> xmlns:xr2=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2015/revision2&quot;</span><span class="ot"> xmlns:xr3=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2016/revision3&quot;</span><span class="ot"> xr:uid=</span><span class="st">&quot;{2838881A-D7EE-4880-9A40-583A7BEB231B}&quot;</span>&gt;&lt;<span class="kw">dimension</span><span class="ot"> ref=</span><span class="st">&quot;A1&quot;</span>/&gt;&lt;<span class="kw">sheetViews</span>&gt;&lt;<span class="kw">sheetView</span><span class="ot"> tabSelected=</span><span class="st">&quot;1&quot;</span><span class="ot"> workbookViewId=</span><span class="st">&quot;0&quot;</span>/&gt;&lt;/<span class="kw">sheetViews</span>&gt;&lt;<span class="kw">sheetFormatPr</span><span class="ot"> defaultRowHeight=</span><span class="st">&quot;15&quot;</span><span class="ot"> x14ac:dyDescent=</span><span class="st">&quot;0.25&quot;</span>/&gt;&lt;<span class="kw">sheetData</span>&gt;&lt;<span class="kw">row</span><span class="ot"> r=</span><span class="st">&quot;1&quot;</span><span class="ot"> spans=</span><span class="st">&quot;1:1&quot;</span><span class="ot"> x14ac:dyDescent=</span><span class="st">&quot;0.25&quot;</span>&gt;&lt;<span class="kw">c</span><span class="ot"> r=</span><span class="st">&quot;A1&quot;</span><span class="ot"> s=</span><span class="st">&quot;1&quot;</span>&gt;&lt;<span class="kw">f</span>&gt;6*7&lt;/<span class="kw">f</span>&gt;&lt;<span class="kw">v</span>&gt;42&lt;/<span class="kw">v</span>&gt;&lt;/<span class="kw">c</span>&gt;&lt;/<span class="kw">row</span>&gt;&lt;/<span class="kw">sheetData</span>&gt;&lt;<span class="kw">sheetProtection</span><span class="ot"> algorithmName=</span><span class="st">&quot;SHA-512&quot;</span><span class="ot"> hashValue=</span><span class="st">&quot;1vd8mFJrCEQ1cOfXy5dZkfZ3vsb5A+FmVy7S3xvY9MDhrCvfPKDgUJtrPL1XTEvoPLaZyeQL21LWeq8fSilt4g==&quot;</span><span class="ot"> saltValue=</span><span class="st">&quot;v5HhQTb+4xMaHY6/lDVUeQ==&quot;</span><span class="ot"> spinCount=</span><span class="st">&quot;100000&quot;</span><span class="ot"> sheet=</span><span class="st">&quot;1&quot;</span><span class="ot"> formatCells=</span><span class="st">&quot;0&quot;</span><span class="ot"> formatColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> formatRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertHyperlinks=</span><span class="st">&quot;0&quot;</span><span class="ot"> deleteColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> deleteRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> sort=</span><span class="st">&quot;0&quot;</span><span class="ot"> autoFilter=</span><span class="st">&quot;0&quot;</span><span class="ot"> pivotTables=</span><span class="st">&quot;0&quot;</span>/&gt;&lt;<span class="kw">pageMargins</span><span class="ot"> left=</span><span class="st">&quot;0.7&quot;</span><span class="ot"> right=</span><span class="st">&quot;0.7&quot;</span><span class="ot"> top=</span><span class="st">&quot;0.75&quot;</span><span class="ot"> bottom=</span><span class="st">&quot;0.75&quot;</span><span class="ot"> header=</span><span class="st">&quot;0.3&quot;</span><span class="ot"> footer=</span><span class="st">&quot;0.3&quot;</span>/&gt;&lt;<span class="kw">pageSetup</span><span class="ot"> paperSize=</span><span class="st">&quot;9&quot;</span><span class="ot"> orientation=</span><span class="st">&quot;portrait&quot;</span><span class="ot"> r:id=</span><span class="st">&quot;rId1&quot;</span>/&gt;&lt;/<span class="kw">worksheet</span>&gt;</span></code></pre></div>
+<p>Let’s first fix the formatting for readability:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource xml numberLines"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="ot"> encoding=</span><span class="st">&quot;UTF-8&quot;</span><span class="ot"> standalone=</span><span class="st">&quot;yes&quot;</span><span class="fu">?&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>&lt;<span class="kw">worksheet</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="ot">    xmlns=</span><span class="st">&quot;http://schemas.openxmlformats.org/spreadsheetml/2006/main&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="ot">    xmlns:r=</span><span class="st">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ot">    xmlns:mc=</span><span class="st">&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><span class="ot"> mc:Ignorable=</span><span class="st">&quot;x14ac xr xr2 xr3&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="ot">    xmlns:x14ac=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="ot">    xmlns:xr=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2014/revision&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="ot">    xmlns:xr2=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2015/revision2&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="ot">    xmlns:xr3=</span><span class="st">&quot;http://schemas.microsoft.com/office/spreadsheetml/2016/revision3&quot;</span><span class="ot"> xr:uid=</span><span class="st">&quot;{2838881A-D7EE-4880-9A40-583A7BEB231B}&quot;</span>&gt;</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    &lt;<span class="kw">dimension</span><span class="ot"> ref=</span><span class="st">&quot;A1&quot;</span>/&gt;</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    &lt;<span class="kw">sheetViews</span>&gt;</span>
+<span id="cb3-12"><a href="#cb3-12"></a>        &lt;<span class="kw">sheetView</span><span class="ot"> tabSelected=</span><span class="st">&quot;1&quot;</span><span class="ot"> workbookViewId=</span><span class="st">&quot;0&quot;</span>/&gt;</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    &lt;/<span class="kw">sheetViews</span>&gt;</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    &lt;<span class="kw">sheetFormatPr</span><span class="ot"> defaultRowHeight=</span><span class="st">&quot;15&quot;</span><span class="ot"> x14ac:dyDescent=</span><span class="st">&quot;0.25&quot;</span>/&gt;</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    &lt;<span class="kw">sheetData</span>&gt;</span>
+<span id="cb3-16"><a href="#cb3-16"></a>        &lt;<span class="kw">row</span><span class="ot"> r=</span><span class="st">&quot;1&quot;</span><span class="ot"> spans=</span><span class="st">&quot;1:1&quot;</span><span class="ot"> x14ac:dyDescent=</span><span class="st">&quot;0.25&quot;</span>&gt;</span>
+<span id="cb3-17"><a href="#cb3-17"></a>            &lt;<span class="kw">c</span><span class="ot"> r=</span><span class="st">&quot;A1&quot;</span><span class="ot"> s=</span><span class="st">&quot;1&quot;</span>&gt;</span>
+<span id="cb3-18"><a href="#cb3-18"></a>                &lt;<span class="kw">f</span>&gt;6*7&lt;/<span class="kw">f</span>&gt;</span>
+<span id="cb3-19"><a href="#cb3-19"></a>                &lt;<span class="kw">v</span>&gt;42&lt;/<span class="kw">v</span>&gt;</span>
+<span id="cb3-20"><a href="#cb3-20"></a>            &lt;/<span class="kw">c</span>&gt;</span>
+<span id="cb3-21"><a href="#cb3-21"></a>        &lt;/<span class="kw">row</span>&gt;</span>
+<span id="cb3-22"><a href="#cb3-22"></a>    &lt;/<span class="kw">sheetData</span>&gt;</span>
+<span id="cb3-23"><a href="#cb3-23"></a>    &lt;<span class="kw">sheetProtection</span><span class="ot"> algorithmName=</span><span class="st">&quot;SHA-512&quot;</span><span class="ot"> hashValue=</span><span class="st">&quot;1vd8mFJrCEQ1cOfXy5dZkfZ3vsb5A+FmVy7S3xvY9MDhrCvfPKDgUJtrPL1XTEvoPLaZyeQL21LWeq8fSilt4g==&quot;</span><span class="ot"> saltValue=</span><span class="st">&quot;v5HhQTb+4xMaHY6/lDVUeQ==&quot;</span><span class="ot"> spinCount=</span><span class="st">&quot;100000&quot;</span><span class="ot"> sheet=</span><span class="st">&quot;1&quot;</span><span class="ot"> formatCells=</span><span class="st">&quot;0&quot;</span><span class="ot"> formatColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> formatRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertHyperlinks=</span><span class="st">&quot;0&quot;</span><span class="ot"> deleteColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> deleteRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> sort=</span><span class="st">&quot;0&quot;</span><span class="ot"> autoFilter=</span><span class="st">&quot;0&quot;</span><span class="ot"> pivotTables=</span><span class="st">&quot;0&quot;</span>/&gt;</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    &lt;<span class="kw">pageMargins</span><span class="ot"> left=</span><span class="st">&quot;0.7&quot;</span><span class="ot"> right=</span><span class="st">&quot;0.7&quot;</span><span class="ot"> top=</span><span class="st">&quot;0.75&quot;</span><span class="ot"> bottom=</span><span class="st">&quot;0.75&quot;</span><span class="ot"> header=</span><span class="st">&quot;0.3&quot;</span><span class="ot"> footer=</span><span class="st">&quot;0.3&quot;</span>/&gt;</span>
+<span id="cb3-25"><a href="#cb3-25"></a>    &lt;<span class="kw">pageSetup</span><span class="ot"> paperSize=</span><span class="st">&quot;9&quot;</span><span class="ot"> orientation=</span><span class="st">&quot;portrait&quot;</span><span class="ot"> r:id=</span><span class="st">&quot;rId1&quot;</span>/&gt;</span>
+<span id="cb3-26"><a href="#cb3-26"></a>&lt;/<span class="kw">worksheet</span>&gt;</span></code></pre></div>
+<p>We can see that, as expected, all the information from cell A1 is still in the worksheet:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">c</span><span class="ot"> r=</span><span class="st">&quot;A1&quot;</span><span class="ot"> s=</span><span class="st">&quot;1&quot;</span>&gt;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">f</span>&gt;6*7&lt;/<span class="kw">f</span>&gt;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">v</span>&gt;42&lt;/<span class="kw">v</span>&gt;</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">c</span>&gt;</span></code></pre></div>
+<p>But more importantly, we can also find the following XML tag:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">sheetProtection</span><span class="ot"> algorithmName=</span><span class="st">&quot;SHA-512&quot;</span><span class="ot"> hashValue=</span><span class="st">&quot;1vd8mFJrCEQ1cOfXy5dZkfZ3vsb5A+FmVy7S3xvY9MDhrCvfPKDgUJtrPL1XTEvoPLaZyeQL21LWeq8fSilt4g==&quot;</span><span class="ot"> saltValue=</span><span class="st">&quot;v5HhQTb+4xMaHY6/lDVUeQ==&quot;</span><span class="ot"> spinCount=</span><span class="st">&quot;100000&quot;</span><span class="ot"> sheet=</span><span class="st">&quot;1&quot;</span><span class="ot"> formatCells=</span><span class="st">&quot;0&quot;</span><span class="ot"> formatColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> formatRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> insertHyperlinks=</span><span class="st">&quot;0&quot;</span><span class="ot"> deleteColumns=</span><span class="st">&quot;0&quot;</span><span class="ot"> deleteRows=</span><span class="st">&quot;0&quot;</span><span class="ot"> sort=</span><span class="st">&quot;0&quot;</span><span class="ot"> autoFilter=</span><span class="st">&quot;0&quot;</span><span class="ot"> pivotTables=</span><span class="st">&quot;0&quot;</span>/&gt;</span></code></pre></div>
+<p>So, what if we remove the entire <code>SheetProtection</code> tag from the xml file?</p>
+<figure>
+<img src="../img/excel_password/unlocked.png" alt="The excel sheet is unprotected, and we can see and modify the formula of cell A1." />
+<figcaption aria-hidden="true">The excel sheet is unprotected, and we can see and modify the formula of cell A1.</figcaption>
+</figure>
+<h1 id="automating-the-password-removal-process">Automating the password removal process</h1>
+<p>We already found one of the advantages of using a text editor like Emacs. In this case we where able to edit a text file within an archived file without unzipping and re-zipping the file. Otherwise (in Windows), we would need to:</p>
+<ol type="1">
+<li>change the file format from .xlsx file to .zip</li>
+<li>unzip the file</li>
+<li>modify the .xml file</li>
+<li>zip the entire directory</li>
+<li>change the resulting archives file format from .zip file to .xlsx</li>
+</ol>
+<p>And these last parts can already lead to issues. The standard zip archiving settings from Windows differ from the default archiving settings from an .xlsx file, and using these causes the resulting .xlsx file to be invalid.</p>
+<p>One of the other major advantages with Emacs is that, practically everything the user can do, can be automated in elisp. For example: we can call <code>C-h k &lt;enter&gt;</code> in the .xlsx buffer in Emacs to find the function called when trying to open the corresponding .xml file on that line:</p>
+<pre><code>RET (translated from &lt;return&gt;) runs the command archive-extract (found in archive-mode-map), which is an interactive
+compiled Lisp function in ‘arc-mode.el’.
+
+It is bound to RET, e..f, &lt;mouse-2&gt;, &lt;menu-bar&gt; &lt;immediate&gt; &lt;find-file&gt;.
+
+(archive-extract &amp;optional OTHER-WINDOW-P EVENT)
+
+In archive mode, extract this entry of the archive into its own buffer.
+
+[back]</code></pre>
+<p>Using this info we can write a script to perform exactly the same actions in Emacs as would be done manually. But emacs-lisp is also a full-fledged programming language, so we can extend the ‘macro’ with loops, if/else cases, etc..</p>
+<p>The result of this work is the following interactive emacs-lisp function:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource commonlisp numberLines"><code class="sourceCode commonlisp"><span id="cb7-1"><a href="#cb7-1"></a>(<span class="kw">defun</span><span class="fu"> excel-remove-sheet-protection </span>()</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="st">&quot;Remove sheet protection from an Excel xlsx file.&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  (interactive)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  (find-file (read-file-name <span class="st">&quot;Enter xlsx file path/name: &quot;</span>))  <span class="co">;open excel file as zip-folder</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  (beginning-of-buffer)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>  (while (condition-case <span class="kw">nil</span>              <span class="co">;try to do this for all sheets</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>             (search-forward-regexp <span class="st">&quot;xl/worksheets/sheet.*?\.xml&quot;</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>           (<span class="kw">error</span> <span class="kw">nil</span>))                    <span class="co">;try to move cursor to next sheet.xml</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>    (<span class="kw">let</span> ((current_xml_point (point)))    <span class="co">;store the current sheet</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>      <span class="co">;; open the sheet and remove the &quot;sheetprotection&quot; xml tag</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>      (archive-extract)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>      (beginning-of-buffer)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>      (while (re-search-forward <span class="st">&quot;&lt;sheetprotection.*?&gt;&quot;</span> <span class="kw">nil</span> <span class="kw">t</span>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>        (replace-match <span class="st">&quot;&quot;</span>))</span>
+<span id="cb7-15"><a href="#cb7-15"></a>      (save-buffer)</span>
+<span id="cb7-16"><a href="#cb7-16"></a>      (kill-buffer)</span>
+<span id="cb7-17"><a href="#cb7-17"></a>      (goto-char current_xml_point))))     <span class="co">;put cursor at last sheet</span></span></code></pre></div>
+<p>When calling this function (by <code>M-x excel-remove-sheet-protection</code>), Emacs first asks the user for a path to the .xlsx file. Emacs will then open this file, and for each sheet in the Excel file it will open the corresponding .xml file and remove the sheetprotection tag.</p>
+<p>The result after calling this function is that, after a few seconds of runtime, all the password sheet protections are removed from the Excel file.</p>
+</main>
+
+<script>
+;(function() {
+  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
+  var selector = '.task-list > li > input[type="checkbox"]';
+  var checkboxes = document.querySelectorAll(selector);
+  Array.from(checkboxes).forEach((checkbox) => {
+    var wasChecked = checkbox.checked;
+    checkbox.disabled = false;
+    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
+  });
+})();
+</script>
+</body>
+</html>
