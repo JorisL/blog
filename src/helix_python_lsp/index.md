@@ -6,6 +6,14 @@ author-url: 'https://blog.jorisl.nl'
 date: "November '22"
 ---
 
+# TL;DR
+
+- Set up poetry to store its virtual environment within the project root.
+- Install `python-lsp-server` and `black` within the virtual environment.
+- Open a terminal session with that virtual environment enabled
+  (`.venv/Scripts/Activate`).
+- Start the helix editor within that terminal session.
+
 # Introduction
 
 At work I've been developing several small-ish software projects in Python using

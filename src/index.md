@@ -14,6 +14,7 @@ subtitle: ""
 
 # Other
 
+- [Bookmarks](bookmarks/)
 - [Planck keyboard cheatsheet](keyboard/)
 
 # About me

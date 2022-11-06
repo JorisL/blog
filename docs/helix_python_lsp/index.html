@@ -25,6 +25,7 @@
     <strong>Contents</strong><label for="contents">⊕</label>
   <input type="checkbox" id="contents">
   <ul>
+  <li><a href="#tldr" id="toc-tldr">TL;DR</a></li>
   <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
   <li><a href="#how-to-configure-the-tools" id="toc-how-to-configure-the-tools">How to configure the tools</a>
   <ul>
@@ -39,6 +40,13 @@
 </nav>
 
 <main>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>Set up poetry to store its virtual environment within the project root.</li>
+<li>Install <code>python-lsp-server</code> and <code>black</code> within the virtual environment.</li>
+<li>Open a terminal session with that virtual environment enabled (<code>.venv/Scripts/Activate</code>).</li>
+<li>Start the helix editor within that terminal session.</li>
+</ul>
 <h1 id="introduction">Introduction</h1>
 <p>At work I’ve been developing several small-ish software projects in Python using <a href="https://python-poetry.org">poetry</a> to manage the different dependencies, virtual environments, etc. for each of those projects. So far I’ve mostly been using Visual Studio Code to edit these projects, instead of using my old and trusted <a href="https://github.com/JorisL/.emacs.d">Emacs config</a>.</p>
 <p>The main reason for using VS Code was due to difficulties with Emacs to get the Python language server protocol correctly working for those projects. It <em>was</em> quite easy to install and set-up the python-lsp-server with emacs for projects using the main installed Python installation on my PC, but each of these projects had their own python virtual environment with various packages either not installed or with a different version of my “main” Python installation. This caused problems with the LSP server, where it would state multiple errors in my code due to it not being able to find the various packages and libraries used in those projects. With VS Code this wasn’t a problem, since it was relatively easy to select either the main Python installation on my PC or the Python installation within the poetry virtual environment.</p>
