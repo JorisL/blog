@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="JorisL" />
+  <title>Jellybean parts &amp; useful components</title>
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/skylighting-solarized-theme.css" />
+</head>
+<body>
+
+<header>
+<h1 class="title">Jellybean parts &amp; useful components</h1>
+<blockquote class="metadata">
+<p class="subtitle">Reference for electronics &amp; PCB design</p>
+<p class="author">
+      <a href="https://blog.jorisl.nl">JorisL</a>
+  </p>
+<p class="date before-toc"><time datetime="last updated: April ’24">last updated: April ’24</time></p>
+</blockquote>
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <strong>Contents</strong><label for="contents">⊕</label>
+  <input type="checkbox" id="contents">
+  <ul>
+  <li><a href="#resistors" id="toc-resistors">Resistors</a>
+  <ul>
+  <li><a href="#fixed-value" id="toc-fixed-value">Fixed value</a></li>
+  <li><a href="#variable" id="toc-variable">Variable</a></li>
+  </ul></li>
+  <li><a href="#diodes" id="toc-diodes">Diodes</a></li>
+  <li><a href="#mosfets" id="toc-mosfets">MOSFETs</a>
+  <ul>
+  <li><a href="#nmos" id="toc-nmos">nMOS</a></li>
+  <li><a href="#pmos" id="toc-pmos">pMOS</a></li>
+  </ul></li>
+  <li><a href="#bjts" id="toc-bjts">BJTs</a>
+  <ul>
+  <li><a href="#npn" id="toc-npn">NPN</a></li>
+  <li><a href="#pnp" id="toc-pnp">PNP</a></li>
+  </ul></li>
+  <li><a href="#opamps" id="toc-opamps">Opamps</a></li>
+  <li><a href="#comparators" id="toc-comparators">Comparators</a></li>
+  <li><a href="#regulators-refereces" id="toc-regulators-refereces">Regulators &amp; refereces</a></li>
+  <li><a href="#timers" id="toc-timers">Timers</a></li>
+  <li><a href="#connectors" id="toc-connectors">Connectors</a></li>
+  <li><a href="#switches-buttons" id="toc-switches-buttons">Switches &amp; buttons</a></li>
+  <li><a href="#other" id="toc-other">Other</a></li>
+  </ul>
+</nav>
+
+<main>
+<p>This is my personal reference for jellybean parts and other usefull electronic components. This list is mostly focussed on hand-solderable surface mount components.</p>
+<p>Sources:</p>
+<ul>
+<li>Art of Electronics, Third Edition</li>
+<li><a href="https://www.youtube.com/watch?v=uq1DMWtjL2U&amp;list=PLvOlSehNtuHtdQF-m5UFZ5GEjABadI3kI">EEVBlog</a></li>
+<li><a href="https://theknowledgeaccelerator.com/2016/04/16/jellybean-components/">The Knowledge Accelerator</a></li>
+<li>…</li>
+</ul>
+<h1 id="resistors">Resistors</h1>
+<h2 id="fixed-value">Fixed value</h2>
+<p>Any resistor in <a href="https://en.wikipedia.org/wiki/E_series_of_preferred_numbers">E24, E48, E96, or E192 series</a> (lower preferred).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Voltage</th>
+<th>Power</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0402</td>
+<td>50V</td>
+<td>63mW</td>
+</tr>
+<tr class="even">
+<td>0603</td>
+<td>75V</td>
+<td>100mW</td>
+</tr>
+<tr class="odd">
+<td>0805</td>
+<td>150V</td>
+<td>125mW</td>
+</tr>
+<tr class="even">
+<td>1206</td>
+<td>200V</td>
+<td>250mW</td>
+</tr>
+</tbody>
+</table>
+<h2 id="variable">Variable</h2>
+<ul>
+<li><a href="https://www.bourns.com/pdfs/3386.pdf">Bourns 3386 9mm square single turn, 0.5 W</a></li>
+<li><a href="https://www.bourns.com/pdfs/3296.pdf">Bourns 3296 9mm square multi turn, 0.5 W</a></li>
+</ul>
+<h1 id="diodes">Diodes</h1>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 4%" />
+<col style="width: 16%" />
+<col style="width: 14%" />
+<col style="width: 15%" />
+<col style="width: 17%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Part #</strong></th>
+<th>Type</th>
+<th>Current rating</th>
+<th>Max voltage</th>
+<th>Voltage drop</th>
+<th>Leakage current</th>
+<th>Capacitance</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>RS1M</strong></td>
+<td>Silicon</td>
+<td>1A</td>
+<td>1000V</td>
+<td>1.3V @ 1A</td>
+<td>5µA @ 1000V</td>
+<td>15pF</td>
+<td>SMA</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>1N4148W</strong></td>
+<td>Silicon</td>
+<td>150mA</td>
+<td>75V</td>
+<td>1V @ 10mA</td>
+<td>5nA @ 20V</td>
+<td>4pF</td>
+<td>SOD123</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>BAT54</strong> (A,C,S suffixes)</td>
+<td>Schottky</td>
+<td>200mA</td>
+<td>30V</td>
+<td>800mV @ 100mA</td>
+<td>2µA @ 25V</td>
+<td>10pF</td>
+<td>SOT23</td>
+<td>variants for 2 diodes in 1 package</td>
+</tr>
+<tr class="even">
+<td><strong>1N5819HW</strong></td>
+<td>Schottky</td>
+<td>1A</td>
+<td>40V</td>
+<td>400mV @ 1A</td>
+<td>10µA @ 32V</td>
+<td>150pF</td>
+<td>SOD123</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>SS54</strong></td>
+<td>Schottky</td>
+<td>5A</td>
+<td>40V</td>
+<td>550mV @ 5A</td>
+<td>1mA @ 40V</td>
+<td>500pF</td>
+<td>SMC</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="mosfets">MOSFETs</h1>
+<h2 id="nmos">nMOS</h2>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 15%" />
+<col style="width: 10%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Resistance</th>
+<th>Threshold voltage</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>2N7002</strong></td>
+<td>60V</td>
+<td>100mA</td>
+<td>2.5Ω</td>
+<td>1V … 2.5V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>BSS138</strong></td>
+<td>50V</td>
+<td>250mA</td>
+<td>1Ω</td>
+<td>0.8V … 1.5V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>BSS123</strong></td>
+<td>100V</td>
+<td>170mA</td>
+<td>1.3Ω</td>
+<td>0.8V … 2V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>FDN337N</strong></td>
+<td>30V</td>
+<td>1.3A</td>
+<td>70mΩ</td>
+<td>0.4 … 1V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="pmos">pMOS</h2>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 15%" />
+<col style="width: 10%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Resistance</th>
+<th>Threshold voltage</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>BSS84</strong></td>
+<td>50V</td>
+<td>130mA</td>
+<td>3Ω</td>
+<td>-0.8V … -2V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>NDS332P</strong></td>
+<td>20V</td>
+<td>700mA</td>
+<td>350mΩ</td>
+<td>-0.4V … -1V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="bjts">BJTs</h1>
+<h2 id="npn">NPN</h2>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 15%" />
+<col style="width: 10%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Base-emitter on</th>
+<th>Gain</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>MMBT3904</strong></td>
+<td>40V</td>
+<td>200mA</td>
+<td>0.65V … 0.95V</td>
+<td>30 … 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>MMBT2222</strong></td>
+<td>40V</td>
+<td>600mA</td>
+<td>0.6V … 2.6V</td>
+<td>35 … 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>FMMT617</strong></td>
+<td>15V</td>
+<td>3A</td>
+<td>0.8V … 1V</td>
+<td>80 … 400</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>2N3055</strong></td>
+<td>100V</td>
+<td>15A</td>
+<td>1.5V</td>
+<td>5 … 80</td>
+<td>TO3</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="pnp">PNP</h2>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 15%" />
+<col style="width: 10%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Base-emitter on</th>
+<th>Gain</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>MMBT3906</strong></td>
+<td>-40V</td>
+<td>-200mA</td>
+<td>-0.65V … -0.95V</td>
+<td>30 … 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>MMBT2907</strong></td>
+<td>-60V</td>
+<td>-600mA</td>
+<td>-0.4V … -2.6V</td>
+<td>50 … 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>FMMT617</strong></td>
+<td>-12V</td>
+<td>2.5A</td>
+<td>-0.8V … -1V</td>
+<td>45 … 475</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>2N3055</strong></td>
+<td>100V</td>
+<td>15A</td>
+<td>1.5V</td>
+<td>5 … 80</td>
+<td>TO3</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="opamps">Opamps</h1>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/lm358.pdf">LM358 industry-standard dual opamp</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/lmv358a.pdf">LMV358 low-voltage rail-to-rail CMOS opamp</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/tl071a.pdf">TL0xx FET input opamp</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/op07c.pdf">OPO07 precision opamp</a></li>
+</ul>
+<h1 id="comparators">Comparators</h1>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/lm393.pdf">LM393 dual comparator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/lmv331-n.pdf">LMVLM2903 dual low-voltage comparator</a></li>
+<li><a href="https://www.mouser.com/datasheet/2/389/cd00118313-1796660.pdf">TS3021 single high-speed rail-to-rail low-voltage comparator</a></li>
+</ul>
+<h1 id="regulators-refereces">Regulators &amp; refereces</h1>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/tlv1117.pdf">1117 adjustable &amp; fixed LDO regulator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/ua78.pdf">μA78xx fixed voltage regulator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/lm317.pdf">LM317 adjustable voltage regulator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/tl431.pdf">TL431 adjustable voltage reference</a></li>
+<li><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/LM4040-41-Precision-Micropower-Shunt-Voltage-Reference-DS20005757B.pdf">LM4040/LM4041 adjustable voltage reference</a></li>
+<li><a href="https://www.analog.com/media/en/technical-documentation/data-sheets/REF01_02_03.pdf">REF01 precision voltage reference</a></li>
+</ul>
+<h1 id="timers">Timers</h1>
+<ul>
+<li><a href="https://www.ti.com/product/NE555">555</a></li>
+<li><a href="https://www.analog.com/en/parametricsearch/11410#/">LTC699x “TimerBlox”</a></li>
+</ul>
+<h1 id="connectors">Connectors</h1>
+<ul>
+<li>DSUB</li>
+<li>Molex Mini-fit</li>
+<li>Molex Micro-fit</li>
+<li>…</li>
+</ul>
+<h1 id="switches-buttons">Switches &amp; buttons</h1>
+<ul>
+<li><a href="https://omronfs.omron.com/en_US/ecb/products/pdf/en-b3f.pdf">Omron B3F</a></li>
+</ul>
+<h1 id="other">Other</h1>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/cd4051b.pdf">CD4051/CD4052/CD4053 Analog Multiplexer Switch</a></li>
+</ul>
+</main>
+
+<script>
+;(function() {
+  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
+  var selector = '.task-list > li > input[type="checkbox"]';
+  var checkboxes = document.querySelectorAll(selector);
+  Array.from(checkboxes).forEach((checkbox) => {
+    var wasChecked = checkbox.checked;
+    checkbox.disabled = false;
+    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
+  });
+})();
+</script>
+</body>
+</html>

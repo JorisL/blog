@@ -15,6 +15,7 @@ subtitle: ""
 # Other
 
 - [Bookmarks](bookmarks/)
+- [Jellybean parts & useful components](jellybean/)
 - [Planck keyboard cheatsheet](keyboard/)
 
 # About me
@@ -27,7 +28,7 @@ metalhead, ...
 <figcaption> ... </figcaption>
 </figure>
 
-## Links:
+## Links
 
 | [GitHub](https://github.com/JorisL) |   |   |
 | ----------------------------------- | - | - |
