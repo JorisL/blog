@@ -80,14 +80,13 @@ Any resistor in [E24, E48, E96, or E192 series](https://en.wikipedia.org/wiki/E_
 | **MMBT3906** | -40V | -200mA | -0.65V ... -0.95V | 30 ... 100 | SOT23 | |
 | **MMBT2907** | -60V | -600mA | -0.4V ... -2.6V | 50 ... 100 | SOT23 | |
 | **FMMT617** | -12V | 2.5A | -0.8V ... -1V | 45 ... 475 | SOT23 | |
-| **2N3055** | 100V | 15A | 1.5V | 5 ... 80 | TO3 | |
 
 # Opamps
 
 - [LM358 industry-standard dual opamp](https://www.ti.com/lit/ds/symlink/lm358.pdf)
 - [LMV358 low-voltage rail-to-rail CMOS opamp](https://www.ti.com/lit/ds/symlink/lmv358a.pdf)
 - [TL0xx FET input opamp](https://www.ti.com/lit/ds/symlink/tl071a.pdf)
-- [OPO07 precision opamp](https://www.ti.com/lit/ds/symlink/op07c.pdf)
+- [OP07 precision opamp](https://www.ti.com/lit/ds/symlink/op07c.pdf)
 
 # Comparators
 
