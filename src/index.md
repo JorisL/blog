@@ -17,6 +17,7 @@ subtitle: ""
 - [Bookmarks](bookmarks/)
 - [Jellybean parts & useful components](jellybean/)
 - [Planck keyboard cheatsheet](keyboard/)
+- [Games to play with a standard deck of cards](card_games/)
 
 # About me
 
