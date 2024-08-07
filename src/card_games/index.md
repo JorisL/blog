@@ -5,4 +5,10 @@ author: "JorisL"
 author-url: 'https://blog.jorisl.nl'
 ---
 
+- [Bourré](bourre/)
+- [Coup](coup/)
+- [Le Truc](le_truc/)
 - [Nine-card golf](nine_card_golf/)
+- [Ricochet poker](ricochet_poker/)
+- [Skull](skull/)
+- [Whist](whist/)

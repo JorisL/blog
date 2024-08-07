@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="JorisL" />
+  <title>Ricochet poker</title>
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/skylighting-solarized-theme.css" />
+</head>
+<body>
+
+<header>
+<h1 class="title">Ricochet poker</h1>
+<blockquote class="metadata">
+<p class="subtitle">Poker without bluffing.</p>
+<p class="author">
+      <a href="https://blog.jorisl.nl">JorisL</a>
+  </p>
+</blockquote>
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <strong>Contents</strong><label for="contents">⊕</label>
+  <input type="checkbox" id="contents">
+  <ul>
+  <li><a href="#setup" id="toc-setup">Setup</a></li>
+  <li><a href="#gameplay" id="toc-gameplay">Gameplay</a>
+  <ul>
+  <li><a href="#breaking-ties" id="toc-breaking-ties">Breaking ties</a></li>
+  </ul></li>
+  </ul>
+</nav>
+
+<main>
+<ul>
+<li>Players: 3-6</li>
+<li>Prerequisites:
+<ul>
+<li>1 deck of cards (52 cards, without jokers), ranked aces-high.</li>
+<li>Chips, coins, etc.</li>
+</ul></li>
+<li>Play time: ?</li>
+</ul>
+<p>Ricochet poker is a form of poker without bluffing, and with an emphasis on calculating odds and pressing luck.</p>
+<p>During a round, all players ante an then receive a portion of their poker hand. The player with the <a href="https://en.wikipedia.org/wiki/List_of_poker_hands">lowest poker hand</a> either chooses to buy more cards or fold. The player with the best hand at the end of the round wins the pot.</p>
+<h1 id="setup">Setup</h1>
+<p>Each round starts with all players making an ante of 1 chip. Then each player receives 1 card, face up.</p>
+<p>The person with the lowest poker hand hand (e.g. lowest card at the start of the round) acts first. Suits are ranked in alphabetical order, from low to high: Clubs, Diamonds, Hearts, Spades.</p>
+<h1 id="gameplay">Gameplay</h1>
+<p>On a players turn, they either fold or buy cards.</p>
+<p>If a player folds, they step out of the round.</p>
+<p>If a player buys cards, they first announce how many they want to buy, and put that many chips in the pot. Players may only buy cards up to a total hand size of 5 cards. The dealer will give the cards, face-up, stopping directly when the hand is not the lowest hand anymore. Note: it can be that the player therefore received fewer cards than bought for.</p>
+<p>If a player buys cards and still has the lowest poker hand after receiving their bought cards, that player is out of the round.</p>
+<p>Ater every turn the action moves to the player with the lowest hand.</p>
+<p>Play continues until there’s 1 player left, or if there is a tie for the best hand.</p>
+<h2 id="breaking-ties">Breaking ties</h2>
+<p>A hand with a <a href="https://en.wikipedia.org/wiki/Kicker_(poker)">kicker</a> beats a hand without (for example, a King+3 hand beats a hand of a single King, but a King+8 beats a King+3). Suits are used to break ties given identical hands. In the final hand, suits are not used to break ties; only to determine the next player in turn. If at the end of a round 2 or more players are tied, the pot is split.</p>
+</main>
+
+<script>
+;(function() {
+  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
+  var selector = '.task-list > li > input[type="checkbox"]';
+  var checkboxes = document.querySelectorAll(selector);
+  Array.from(checkboxes).forEach((checkbox) => {
+    var wasChecked = checkbox.checked;
+    checkbox.disabled = false;
+    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
+  });
+})();
+</script>
+</body>
+</html>
