@@ -14,13 +14,13 @@ Schnapsen is a trick taking game for 2 players consisting of multiple rounds, wh
 Points during a round are awarded based on the card scores (face value for number cards, 11 points for aces) and for declaring a marriage, which is a 3 and 4 of the same suit.
 Multiple rounds are placed until a player reached 7 points worth of rounds.
 
-# Round setup
+# Gameplay
+
+## Round setup
 
 At the start of each round, both players are dealt 5 cards.
 Use the 10 remaining cards to form the draw pile, and tuck 1 of these cards face-up underneath the other 9 cards.
 The face-up card determines the trump suit this round.
-
-# Gameplay
 
 ## Tricks
 
