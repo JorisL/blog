@@ -5,7 +5,7 @@ author: "JorisL"
 author-url: 'https://blog.jorisl.nl'
 ---
 
-- Players: 3-6 (best 5-6)
+- Players: 4-6 (best 5-6)
 - Prerequisites:
   - 1 deck of cards
 - Play time: 20 minutes
