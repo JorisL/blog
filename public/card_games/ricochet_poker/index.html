@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 10px;
+        font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+          sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        color: #444;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.2;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: thin solid red;
+        padding: 6px;
+      }
+      /* For all <code> */
+      code {
+        font-family: monospace;
+        font-size: inherit;
+        color: #c9d1d9;
+        background: #222;
+      }
+      /* Code in text */
+      p > code,
+      li > code,
+      dd > code,
+      td > code {
+        word-wrap: break-word;
+        box-decoration-break: clone;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      pre code {
+        display: block;
+        white-space: pre;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: scroll;
+        max-width: 100%;
+        min-width: 100px;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #c9d1d9;
+          background: #0d1117;
+        }
+        a:link {
+          color: #58a6ff;
+        }
+        a:visited {
+          color: #8e96f0;
+        }
+        th,
+        td {
+          border: thin solid #c9d1d9;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <body>
+    <h1 id="ricochet-poker">Ricochet poker</h1>
+<p><em>Poker without bluffing.</em></p>
+<ul>
+<li>Players: 3-6</li>
+<li>Prerequisites:</li>
+<li>1 deck of cards (52 cards, without jokers), ranked aces-high.</li>
+<li>Chips, coins, etc.</li>
+<li>Play time: ?</li>
+</ul>
+<p>Ricochet poker is a form of poker without bluffing, and with an emphasis on calculating odds and pressing luck.</p>
+<p>During a round, all players ante an then receive a portion of their poker hand.
+The player with the <a href="https://en.wikipedia.org/wiki/List_of_poker_hands">lowest poker hand</a> either chooses to buy more cards or fold.
+The player with the best hand at the end of the round wins the pot.</p>
+<h2 id="setup">Setup</h2>
+<p>Each round starts with all players making an ante of 1 chip.
+Then each player receives 1 card, face up.</p>
+<p>The person with the lowest poker hand hand (e.g. lowest card at the start of the round) acts first.
+Suits are ranked in alphabetical order, from low to high: Clubs, Diamonds, Hearts, Spades.</p>
+<h2 id="gameplay">Gameplay</h2>
+<p>On a players turn, they either fold or buy cards.</p>
+<p>If a player folds, they step out of the round.</p>
+<p>If a player buys cards, they first announce how many they want to buy, and put that many chips in the pot.
+Players may only buy cards up to a total hand size of 5 cards.
+The dealer will give the cards, face-up, stopping directly when the hand is not the lowest hand anymore.
+Note: it can be that the player therefore received fewer cards than bought for.</p>
+<p>If a player buys cards and still has the lowest poker hand after receiving their bought cards, that player is out of the round.</p>
+<p>Ater every turn the action moves to the player with the lowest hand.</p>
+<p>Play continues until there's 1 player left, or if there is a tie for the best hand.</p>
+<h3 id="breaking-ties">Breaking ties</h3>
+<p>A hand with a <a href="https://en.wikipedia.org/wiki/Kicker_(poker)">kicker</a> beats a hand without (for example, a King+3 hand beats a hand of a single King, but a King+8 beats a King+3).
+Suits are used to break ties given identical hands.
+In the final hand, suits are not used to break ties; only to determine the next player in turn.
+If at the end of a round 2 or more players are tied, the pot is split.</p>
+  </body>
+</html>
+<footer></footer>

@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 10px;
+        font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+          sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        color: #444;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.2;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: thin solid red;
+        padding: 6px;
+      }
+      /* For all <code> */
+      code {
+        font-family: monospace;
+        font-size: inherit;
+        color: #c9d1d9;
+        background: #222;
+      }
+      /* Code in text */
+      p > code,
+      li > code,
+      dd > code,
+      td > code {
+        word-wrap: break-word;
+        box-decoration-break: clone;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      pre code {
+        display: block;
+        white-space: pre;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: scroll;
+        max-width: 100%;
+        min-width: 100px;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #c9d1d9;
+          background: #0d1117;
+        }
+        a:link {
+          color: #58a6ff;
+        }
+        a:visited {
+          color: #8e96f0;
+        }
+        th,
+        td {
+          border: thin solid #c9d1d9;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <body>
+    <h1 id="bourre">Bourré</h1>
+<p><em>A trick taking gambling game.</em></p>
+<ul>
+<li>Players: 3-8 (best with 5-7)</li>
+<li>Prerequisites:</li>
+<li>1 deck of cards (52 cards, without jokers), ranked aces-high.</li>
+<li>Chips, coins, etc.</li>
+<li>Play time: ?</li>
+</ul>
+<p>Players try to win more tricks than any other single player to win the pot, and try to win at least 1 trick to not match the pot.</p>
+<h2 id="setup">Setup</h2>
+<p>Each player antes 1 chip in the pot, and is dealt 5 cards.
+The last card delt to the dealer is flipped open and placed in front of the dealer; this is the trump suite this round.</p>
+<p>Starting left from the dealer, each player decides if they stay in or fold.
+If a player folds, they place their hand cards face-down in front of them.
+They can not longer win the pot on that deal, nor lose any additional chips.
+If a player stays, they can decide to discard up to 5 cards face down (up to 3 when playing with 7 or 8) and drawing that amount of cards from the unused portion of the deck.</p>
+<p>Players may not announce or gesture indicating whether they intend to play or not or how many cards they might exchange, before it is their turn to act.</p>
+<p>If there are no more cards remaining in the deck to exchange cards, the dealer gathers all discarded cards and shuffles them to form the new deck.</p>
+<p>If the flipped card is an ace, the dealer must play.</p>
+<p>The dealer is allowed to exchainge their flipped over card. If so, set this card aside face-up. This card still determines the trump suit.</p>
+<p>If only 1 player elects to stay, that player is deemed to have won all tricks that round.</p>
+<p>The player left of the dealer starts the first trick.
+In subsequent rounds, the trick is started by the player who won the previous trick.</p>
+<h2 id="trick-taking">Trick taking</h2>
+<p>The leading player plays a card, after which the other players play a card in clockwise order.
+The trick is won by whoever played the highest card of the trump suit, or if none of the trump suit was played the highest card of the leading suit.</p>
+<p>The play of cards are governed by these rules:</p>
+<ul>
+<li>Players must follow suit, if able.</li>
+<li>Players not able to follow suit must play a trump card, if able.</li>
+<li>Subject to the previous rules; a player must play a card that would, curently, win the trick, if able.</li>
+<li>If a player neither has cards of the leading suit nor trump suit, they may play any card from their hand.</li>
+</ul>
+<p>Note: these rules have more restrictions than most trick-taking games.</p>
+<p>If a player is not able to play a card that would win them the trick they may choose themselves which card to play, given the rules to play the lead suit or trump suit if not able.</p>
+<p>The dealer's flipped over card is treated as one of their 5 hand cards and can be played at any time, given the rules stated above.</p>
+<p>A player who is sure to win 3 tricks irrespective of how the cards are played, and therefore is certain to win the pot, has the following additional restrictions.</p>
+<ul>
+<li>If it is their turn to lead, they must lead with their highest trump.</li>
+<li>If they are playing in a trick lead by another player, and not being the last one to play in that trick, they must play there highest trump if able (if allowed by the standard rules stated above).</li>
+</ul>
+<h2 id="payments">Payments</h2>
+<p>The player who wins the most tricks wins the pot.
+If multiple players are tied for the most tricks then no one takes the pot - it remains for the next deal and the new antes and penalties are added to it.</p>
+<p>Any player who takes no trick is said to have gone "bourré". These players must each pay an amount equal to the whole contents of the pot.
+These payments form part of the pot for the next deal.</p>
+<p>Players who have gone bourré and players who where tied for the most tricks do not pay an ante for the next deal.
+All other players pay 1 chip ante as usual.
+These payments are regardless of wether the player continues play in the next round.</p>
+<p>Deal then passes to the left.</p>
+<p>If a player plays a card not in accordance to the rules, and this is not fixed befor the next player played their card, that player must forfit the round and pay as if they have gone bourré at the end of the round.</p>
+<h2 id="closing-words">Closing words</h2>
+<p>Due to the quickly growing payments round after round, it can be prefferable to pay with a limit, for example 20 chips.
+When played with a chip limit, players pay at most that limit when going bourré and the winner can only get that amount out of the pot (keeping the remainder of the pot for the next round).</p>
+<p>See <a href="https://youtu.be/jQxpKAtvdT0">this</a> video from Shut Up &amp; Sit Down for a short explenation and playtrough of this game.</p>
+  </body>
+</html>
+<footer></footer>

@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 10px;
+        font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+          sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        color: #444;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.2;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: thin solid red;
+        padding: 6px;
+      }
+      /* For all <code> */
+      code {
+        font-family: monospace;
+        font-size: inherit;
+        color: #c9d1d9;
+        background: #222;
+      }
+      /* Code in text */
+      p > code,
+      li > code,
+      dd > code,
+      td > code {
+        word-wrap: break-word;
+        box-decoration-break: clone;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      pre code {
+        display: block;
+        white-space: pre;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: scroll;
+        max-width: 100%;
+        min-width: 100px;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #c9d1d9;
+          background: #0d1117;
+        }
+        a:link {
+          color: #58a6ff;
+        }
+        a:visited {
+          color: #8e96f0;
+        }
+        th,
+        td {
+          border: thin solid #c9d1d9;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <body>
+    <h1 id="nine-card-golf">Nine-card Golf</h1>
+<p><em>Players draw and discard to minimize the total value of their tableau of 9 cards.</em></p>
+<ul>
+<li>Players: 2+</li>
+<li>Prerequisites:</li>
+<li>1 deck of cards (52 cards + 2 jokers) per 2-3 players</li>
+<li>Something to keep the running score for each player</li>
+<li>Play time: 15-20 minutes</li>
+</ul>
+<p>The game is played over 4 rounds, where in each round each player tries to get as few points as possible.</p>
+<h2 id="setup">Setup</h2>
+<p>Shuffle all cards (including jokers) and deal out 9 cards face down to each player.
+Players arrange their cards in a 3x3 grid, keeping the cards face down.</p>
+<p>Place the remaining cards as a draw pile in the center of the table, and flip over 1 card to start the discard pile.</p>
+<p>Choose a player to start the first round.
+On subsequent rounds, the player who scored the most points in the prior round is the starting player.</p>
+<p>Each player flips over 3 cars of their choosing in their grid, without looking at the other cards.</p>
+<h2 id="actions">Actions</h2>
+<p>A player chooses one of the following actions in their turn:</p>
+<ol>
+<li>Draw and look at the top card of the draw pile. The player then chooses either to:</li>
+<li>Replacing one of their grid cards with the drawn card, discarding the replaced card.</li>
+<li>Discarding the drawn card, after which the player may choose to flip one of the face-down cards in their grid.</li>
+<li>Replace one of their grid cards with the top card of the discard pile, discarding the replaced card.</li>
+</ol>
+<p>Either a face-down or face-up card can be replaced, but the new card is alwasy played face-up.
+Discarded cards are always placed face-up on top of the discard pile.</p>
+<p>When a player reveals all cards in their grid, all other players get 1 additional turn, after which the round is scored.</p>
+<h2 id="scoring">Scoring</h2>
+<p>Each player first flips over their face-down cards, if still remaining.
+Then each player scores using the following rules:</p>
+<ul>
+<li>Aces are worth 1 point.</li>
+<li>Numbered cards (2-10) are worth their face-value.</li>
+<li>Jacks and Queens are worth 10 points.</li>
+<li>Kings are worth 0 points.</li>
+<li>
+<p>Jokers are worth -2 points.</p>
+</li>
+<li>
+<p>If a card is orthagonally adjacent with a card of the same value, it scores 0 points instead.</p>
+</li>
+<li>
+<p>A set of 4 same-valued cards in a 2x2 block score -10 ponts.</p>
+</li>
+<li>
+<p>If the player who ended the round (first to reveal all cards in their grid) did not get the lowest score this round, they get a +10 point penalty.</p>
+</li>
+</ul>
+<p>Players keep a running cound of their scores over multiple rounds.
+The player with the lowest total score wins.</p>
+<h2 id="closing-words">Closing words</h2>
+<p>As with most classic card games, there are many variants of the card game Golf, see <a href="https://en.wikipedia.org/wiki/Golf_(card_game)">Wikipedia</a>.
+Nine-card golf, using rules as explaned on this page, is my preferred wat to play.</p>
+<p>In my opinion this game works bests as a 2-player game, because of:</p>
+<ul>
+<li>The speed of play.</li>
+<li>High importance to not only care for your own grid, but also to prevent throwing away cards the opponent can use.</li>
+<li>The use of a single-card deck causes fewer opportunities making sets of cards, leading to more strategic decisions and less chance.</li>
+</ul>
+<p>The game <a href="https://boardgamegeek.com/boardgame/204135/skyjo">Skyjo</a> is a modern implementation of the Golf family of card games, suitable for 2-5 players.</p>
+  </body>
+</html>
+<footer></footer>

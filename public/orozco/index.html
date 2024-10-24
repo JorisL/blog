@@ -1,0 +1,490 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 10px;
+        font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+          sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        color: #444;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.2;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: thin solid red;
+        padding: 6px;
+      }
+      /* For all <code> */
+      code {
+        font-family: monospace;
+        font-size: inherit;
+        color: #c9d1d9;
+        background: #222;
+      }
+      /* Code in text */
+      p > code,
+      li > code,
+      dd > code,
+      td > code {
+        word-wrap: break-word;
+        box-decoration-break: clone;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      pre code {
+        display: block;
+        white-space: pre;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: scroll;
+        max-width: 100%;
+        min-width: 100px;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #c9d1d9;
+          background: #0d1117;
+        }
+        a:link {
+          color: #58a6ff;
+        }
+        a:visited {
+          color: #8e96f0;
+        }
+        th,
+        td {
+          border: thin solid #c9d1d9;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <body>
+    <hr />
+<p>title: "Orozco blindsove method"
+subtitle: "'intuitive' method for blindfolded speedcubing"
+author: "JorisL"
+author-url: '<a href="https://blog.jorisl.nl">https://blog.jorisl.nl</a>'
+date: "January '24"</p>
+<hr />
+<h1 id="introduction">Introduction</h1>
+<p>...</p>
+<p>Assumed is already some background knowledge with:</p>
+<ul>
+<li>Blindsolving (for example using the OP or M2 methods)</li>
+<li>The <a href="https://www.speedsolving.com/wiki/index.php/Speffz">Speffz lettering scheme</a></li>
+<li><a href="https://ruwix.com/the-rubiks-cube/notation/">Rubik's cube notation</a></li>
+<li>Commutators &amp; Conjugates</li>
+</ul>
+<h1 id="notation">Notation</h1>
+<ul>
+<li>A commutator is in the form <code>A B A' B'</code>, where <code>A</code> and <code>B</code> are sets of moves and where <code>A'</code> and <code>B'</code> are their inverses. <code>A B A' B'</code> in shortened notation is written as <code>[A, B]</code>.</li>
+<li>A conjugate is in the form <code>C D C'</code>, where <code>C</code> and <code>D</code> are sets of moves, and where <code>C'</code> is the inverse of <code>C</code>. <code>C D C'</code> in shortened notation is written as <code>[C: D]</code>.</li>
+<li>Note: <code>C</code> in this context is often a set-up move for commutator <code>D</code>.</li>
+<li>A commutator <code>[A, B]</code> with set-up move <code>C</code> can be written as <code>[C: [A, B]]</code></li>
+</ul>
+<p>Inverting rules:</p>
+<ul>
+<li>the inverse of <code>[A, B]</code> is <code>[B, A]</code></li>
+<li>the inverse of <code>[C: D]</code> is <code>[C: D'</code>]</li>
+<li>the inverse of <code>[C: [A, B]]</code> is <code>[C: [B, A]]</code></li>
+</ul>
+<h1 id="method-overview">Method overview</h1>
+<h2 id="commutators-conjugates">Commutators &amp; Conjugates</h2>
+<h2 id="speffz-lettering-scheme">Speffz lettering scheme</h2>
+<h1 id="algorithms">Algorithms</h1>
+<p>These are the algorithms I generally use. Note that these are not the most
+optimal algoritms in every case, but for me these are easiest to remember.</p>
+<p>For both corners and edges, the C sticker is the buffer location and D sticker
+the helper location.</p>
+<h2 id="corners">Corners</h2>
+<p>The corners are split up into 4 groups with similar algorithms:</p>
+<ul>
+<li>D-layer, but not on D-face</li>
+<li>D-face</li>
+<li>UL pieces</li>
+<li>UBR piece (helper)</li>
+</ul>
+<h3 id="d-layer-but-not-on-d-face">D-layer, but not on D-face</h3>
+<p>In general all can be solved using a pure commutator, except for K and T. These
+require a set-up move to first move them out of the R layer.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G</td>
+<td><code>[U, R' D R]</code></td>
+<td><a href="https://cubedb.net/?puzzle=3&amp;alg=%5BU%2C_R-_D_R%5D&amp;type=alg">odd</a>, <a href="https://cubedb.net/?puzzle=3&amp;alg=%5BR-_D_R%2C_U%5D&amp;type=alg">even</a></td>
+</tr>
+<tr>
+<td>K</td>
+<td><code>[D': [U, R' D R]]</code></td>
+<td><a href="https://cubedb.net/?puzzle=3&amp;alg=%5BD-%3A_%5BU%2C_R-_D_R%5D%5D&amp;type=alg">odd</a>, <a href="https://cubedb.net/?puzzle=3&amp;alg=%5BD-%3A_%5BR-_D_R%2C_U%5D%5D&amp;type=alg">even</a></td>
+</tr>
+<tr>
+<td>O</td>
+<td><code>[R D R', U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>S</td>
+<td><code>[U, R' D2 R]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>H</td>
+<td><code>[R D' R', U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>L</td>
+<td><code>[R D2 R', U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>P</td>
+<td><code>[U, R' D' R]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>T</td>
+<td><code>[D: [R D' R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="d-face">D-face</h3>
+<p>All the D-face targets use the "R2 D' R2 D R2" algorithm to swith the C and V
+stickers. Other pieces (U, W, X) first do a D-face set-up to allign the piece in
+the DFR position. If the piece is odd (first in a pair), the V-piece first has
+to be exchanged with the helper B. Therefore the odd pieces will be in form " U,
+interchange, U', interchange' ". If the piece is even it has to be switched
+first with the buffer C, therefore even pieces will be in form " interchange, U,
+interchange' U' "</p>
+<p>Note that the interchange algorim is the same when inverted.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V</td>
+<td><code>[U, R2 D' R2' D R2]</code></td>
+<td><a href="https://cubedb.net/?puzzle=3&amp;alg=%5BU%2C_R2_D-_R2-_D_R2%5D&amp;type=alg">odd</a>, <a href="https://cubedb.net/?puzzle=3&amp;alg=%5BR2_D-_R2-_D_R2%2C_U%5D&amp;type=alg">even</a></td>
+</tr>
+<tr>
+<td>U</td>
+<td><code>[D: [U, R2 D' R2' D R2]]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>W</td>
+<td><code>[D': [U, R2 D' R2' D R2]]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>X</td>
+<td><code>[D2: [U, R2 D' R2' D R2]]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ul-pieces">UL pieces</h3>
+<p>For these pieces an L, L', or L2 set-up move is used, after which it is solved
+the same as a the D-layer piece.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><code>[L': [U, R' D2 R]]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td><code>[L: [R D2 R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>E</td>
+<td><code>[L': [R D' R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>F</td>
+<td><code>[L: [U, R' D R]]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>I</td>
+<td><code>[L2: [U, R' D2 R]]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>R</td>
+<td><code>[L2: [R D2 R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ubr-piece-helper">UBR piece (helper)</h3>
+<p>If the helper sticker (B) is encountered, no algorimn needs to be performed. If
+another sticker on that piece (N or Q) is encountered, the pieces in the buffer
+and helper locations must be rotated.</p>
+<p>Note: the N and Q algorithms are each others inverses. E.g. the N odd algoritm
+and Q even algorithm are the same, and vice-versa.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td><em>no algoritm</em></td>
+<td><em>N/A</em></td>
+</tr>
+<tr>
+<td>N</td>
+<td>[<code>R' D' R D R' D' R, U]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>Q</td>
+<td><code>[U, R' D' R D R' D' R]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="edges">Edges</h2>
+<p>The edges are split up into 5 groups with similar algorithms:</p>
+<ul>
+<li>D-layer, but not on D-face</li>
+<li>D-face</li>
+<li>E-layer</li>
+<li>UB, UL pieces</li>
+<li>UR piece (helper)</li>
+</ul>
+<h3 id="d-layer-but-not-on-d-face_1">D-layer, but not on D-face</h3>
+<p>These algoritms first put the piece in either the LD or RD position (G or O
+sticker), and then use a <code>M D M'</code> or <code>M D' M'</code> sequence to place that piece in
+the C position.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G</td>
+<td><code>[U, M D M']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>K</td>
+<td><code>[D': [U, M D M']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>O</td>
+<td><code>[U, M D' M']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>S</td>
+<td><code>[D: [U, M D M']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="d-face_1">D-face</h3>
+<p>These algorithms first put the piece in the DF position (U sticker), and then
+use a <code>M D2 M'</code> sequence to place that piece in the C position.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U</td>
+<td><code>[U, M D2 M']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>V</td>
+<td><code>[D': [U, M D2 M']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>W</td>
+<td><code>[D2: [U, M D2 M']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>X</td>
+<td><code>[D: [U, M D2 M']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="e-layer">E-layer</h3>
+<p>These algoritms use a <code>R E R'</code> sequence (or any variation thereof) to place the
+piece in the B position. If requred a set-up move is first performed to remove
+the piece from the R layer.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R</td>
+<td><code>[R' E2 R, U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>H</td>
+<td><code>[R E' R', U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>F</td>
+<td><code>[R' E R, U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>L</td>
+<td><code>[R E2 R', U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>J</td>
+<td><code>[E': [R' E R, U']</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>P</td>
+<td><code>[E': [R E2 R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>N</td>
+<td><code>[E: [R' E2 R, U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>T</td>
+<td><code>[E: [R E' R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ub-ul-pieces">UB, UL pieces</h3>
+<p>These pieces first have a set-up move to put them from the U layer into the
+E-layer, and then they are solved using one of the E-layer pieces.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><code>[B: [R E' R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>Q</td>
+<td><code>[B: [R' E2 R, U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td><code>[L: [R E2 R', U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+<tr>
+<td>E</td>
+<td><code>[L: [R' E R, U']]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ur-piece-helper">UR piece (helper)</h3>
+<p>If the helper sticker (B) is encountered, no algorimn needs to be performed. If
+the other sticker (M) is encountered, the pieces in the buffer and helper
+locations must be rotated.</p>
+<p>Note: the rotation algorithm for even cases is the same.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Letter</strong></th>
+<th><strong>Algorithm (odd)</strong></th>
+<th><strong>Links</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td><em>no algoritm</em></td>
+<td><em>N/A</em></td>
+</tr>
+<tr>
+<td>M</td>
+<td>[<code>M D' M' D M D2 M', U]</code></td>
+<td><a href="">odd</a>, <a href="">even</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="tips-and-tricks">Tips and tricks</h1>
+<h2 id="choosing-target-pieces-for-new-cycles">Choosing target pieces for new cycles</h2>
+<h2 id="skipping-targets">Skipping targets</h2>
+<h1 id="example-solves">Example solves</h1>
+<ul>
+<li><a href="https://cubedb.net/?puzzle=3&amp;scramble=R_U_R-_U_R_U2_R-&amp;alg=%2F%2F_Corners%3A_RI_BD%0A%0A%5BL2%3A_%5BR_D2_R-%2C_U-%5D_%5D_%2F%2F_R_odd%0A%5BL2%3A_%5BR-_D2_R%2C_U%5D_%5D__%2F%2F_I_even%0A%0A%2F%2F_B%3A_skipp%0A%5BL%3A_%5BU-%2C_R_D2_R-%5D_%5D__%2F%2F_D_even%0A%0A%0A%2F%2F_Edges%3A_AB_DA%0A%0A%5BB%3A_%5BR_E-_R-%2C_U-%5D%5D_%2F%2F_A_odd%0A%2F%2F_B%3A_skip%0A%0A%5BL-%3A_%5BR-_E2_R%2C_U-%5D%5D_%2F%2F_D_odd%0A%5BB%3A_%5BU-%2C_R_E-_R-%2C%5D%5D_%2F%2F_A_even">Sune</a></li>
+</ul>
+  </body>
+</html>
+<footer></footer>

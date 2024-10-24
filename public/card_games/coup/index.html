@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 10px;
+        font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+          sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        color: #444;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.2;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: thin solid red;
+        padding: 6px;
+      }
+      /* For all <code> */
+      code {
+        font-family: monospace;
+        font-size: inherit;
+        color: #c9d1d9;
+        background: #222;
+      }
+      /* Code in text */
+      p > code,
+      li > code,
+      dd > code,
+      td > code {
+        word-wrap: break-word;
+        box-decoration-break: clone;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      pre code {
+        display: block;
+        white-space: pre;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: scroll;
+        max-width: 100%;
+        min-width: 100px;
+        padding: 0.1rem 0.3rem 0.2rem;
+        border-radius: 0.2rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #c9d1d9;
+          background: #0d1117;
+        }
+        a:link {
+          color: #58a6ff;
+        }
+        a:visited {
+          color: #8e96f0;
+        }
+        th,
+        td {
+          border: thin solid #c9d1d9;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <body>
+    <h1 id="coup">Coup</h1>
+<p><em>A game of docial deduction, bluffing, and deception.</em></p>
+<ul>
+<li>Players: 3-6 (best 4-6), with variant for 2 players.</li>
+<li>Prerequisites:</li>
+<li>1 deck of cards</li>
+<li>Optional: coins (tokens, chips, etc.)</li>
+<li>Play time: 5-10 minutes per round</li>
+</ul>
+<p><a href="https://boardgamegeek.com/boardgame/131357/coup">Coup</a> is a social deduction bluffing game, best played with 4 to 6 players.
+This write-up shows how this game can be played with a standard deck of cards, but I would also recommend to purchase the real game to support the desiner (and because it is a bit easier to play with the actual cards which contain the proper names and help text).</p>
+<p>A player wins if they are the last person with any cards remaining.
+This game is intended to be played multiple times.</p>
+<h2 id="setup">Setup</h2>
+<p>Make a deck out of 3 of each of the following cards: Jack, Queen, King, Ace, 2.</p>
+<p>Shuffle the deck, and deal 2 cards to each player.</p>
+<p>The remaining cards are used as coins, if no other kind of tokens are available.
+Give each player 2 starting coins.</p>
+<h2 id="the-cards">The cards</h2>
+<p>There are 5 kinds of character cards, each with their own ability.</p>
+<h3 id="king-duke">King = Duke</h3>
+<p>Take 3 coins.
+Blocks foreign aid.</p>
+<h3 id="ace-assasin">Ace = Assasin</h3>
+<p>Pay 3 coins and try to assasinate another players character.
+Can be blocked by a Contessa.</p>
+<h3 id="queen-contessa">Queen = Contessa</h3>
+<p>Blocks an assasination attempt against yourself.</p>
+<h3 id="jack-captain">Jack = Captain</h3>
+<p>Steal 2 coins from another player.
+Can be blocked by a Captain or Inquisitor.
+Blocks stealing.</p>
+<h3 id="2-inquisitor">2 = Inquisitor</h3>
+<p>Draw one card from the deck, and choose wether or not to exchange it with one of your cards.
+Shuffle the drawn or exchanged card back into the deck.</p>
+<p>-OR-</p>
+<p>Choose a player to reveal one of their cards to you (their choice of which to show).
+You may force that player to draw a new card and shuffle the revealed card back into the deck.</p>
+<p>Inquisitor can block stealing.</p>
+<h2 id="gameplay">Gameplay</h2>
+<p>During a players turn they can use one of the following actions:</p>
+<ul>
+<li>Influence: use the ability of one of the character cards.</li>
+<li>Income: take 1 coin from the pool.</li>
+<li>Foreign aid: take 2 coins from the pool. Can be blocked by a Duke.</li>
+<li>Coup: pay 7 coins back to the pool, and choose a player. That player removes one of their cards from their hand. Players are forced to coup if they have 10+ coins.</li>
+</ul>
+<p>If a player looses a card, either due to coup, assasination, or a bluff call, they place that card face-open in the middle of the table.</p>
+<p>If a player doesn't have any cards left, they are out of the game for the remainder of the round.</p>
+<h3 id="bluffing-deception">Bluffing &amp; deception</h3>
+<p>When a player uses a cards ability, either in their own turn, or as a reaction in someone elses turn, they are not required to have the claimed characder; they can bluf that they have that character.</p>
+<p>Any time a player uses a cards ability, any other player can challenge them.
+If a player is challanged, they must reveil one of their cards.</p>
+<ul>
+<li>If the challanged player reveils the claimed card, the player who called on their bluf loses one of their cards. The challenged player shuffles the reveiled card back into the deck and draws a new card.</li>
+<li>If the challanged player reveils another card, that player looses the reveiled card.</li>
+</ul>
+<p>Note: if blocking stealing, the player must declare wether it is blocked using a Captain or an Inquisitor.</p>
+<h2 id="2-player-variant">2 player variant</h2>
+<p>To play coup with 2 players, I recommend to use the following 2 additional rules</p>
+<h3 id="call-the-coup">Call the Coup</h3>
+<p>When a player performs the coup action, they must name a specific character to kill.
+If the other player has that character, it is reveiled and it dies as normal.</p>
+<p>If the player does not have that specific character, that player reveils all of their character cards.
+That player does not loose any of their cards, but the player who called the coup does loose their 7 coins.
+The player who revield their hand draws 2 cards from the deck and then chooses 2 cards to shuffle back into the deck.</p>
+<h3 id="5-lives-each">5 lives each</h3>
+<p>Both players start with 2 characters, as normal.
+But if a character dies, that player draws a new card.
+When loosing their 4rd or 5<sup>th</sup> card, that player does not draw any new cards.</p>
+  </body>
+</html>
+<footer></footer>
