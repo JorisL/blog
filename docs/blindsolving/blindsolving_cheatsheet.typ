@@ -101,8 +101,10 @@ Target is piece located on #piece[A].
   [#piece[C], #piece[K], #piece[W]], [Set-up with #alg[l] rotation to #piece[Q], solve as #piece[Q], undo set-up],
   [#piece[I] (even), #piece[S] (uneven)], [#alg[(D r' U) R2 (U' r' U) R2 (U' D' r2)]],
   [#piece[S] (even), #piece[I] (uneven)], [#alg[(r2' D U) R2 (U' r U) R2 (U' r D')]],
-  [Parity], [#alg[(r' U2) (r U2) (r' U2) x (r U2)3 (r2 U2) x' (r' U2)]],
+  [Parity], [#alg[r2 (D' L' F) (l' U2 l' U2) (F2 l' F2 r) (U2 r' U2 l2) (F' L D)]],
 )
+
+Parity algorithm is based on the following algorithm to swap the UBR and UFR wings: #alg[(l' U2 l' U2) (F2 l' F2 r) (U2 r' U2 l2)]. First a #alg[r2] move is done to fix all pieces, except for the #piece[U] and #piece[A] pieces. Then the #piece[U] piece is brought to the UFR location, the swapping is performed, and the #piece[U] piece set-up is undone.
 
 = 4x4 corners: OP (Old Pochmann)
 
@@ -110,7 +112,7 @@ Target is piece located on #piece[A].
 
 #table(
   theader[Algorithms],
-  [Parity], [#alg[U2 (R U R' U') (r2 U2 r2 Uw2 r2 Uw2) (U' R U' R') U2]],
+  [Parity], [#alg[(L2 D F2) (r2 U2 r2 Uw2 r2 Uw2) (F2 D' L2)]],
 )
 
 This parity algorithm first sets up both 'edges' to the UF and UB spots, performs the standard 4x4 PLL parity algorithm, and undoes the set-up.
