@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content="Marmite" />
+    
+<meta property="og:title" content="Writing a simple lisp in LabVIEW and Nim">
+
+<meta property="og:description" content="Making my own programming language, first in LabVIEW and then in Nim.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JorisL blog">
+
+<meta property="article:published_time" content=" 2023-01-15T00:00:00+00:00">
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/writing-a-simple-lisp-in-labview-and-nim.html"
+    },
+    "url": "/writing-a-simple-lisp-in-labview-and-nim.html",
+    "headline": "Writing a simple lisp in LabVIEW and Nim",
+    "description": "Making my own programming language, first in LabVIEW and then in Nim.",
+    
+    
+    "publisher": {
+        "@type": "Organization",
+        "name": "JorisL blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/"
+        }
+    },
+    "datePublished": "2023-01-15T00:00:00+00:00"
+}
+</script>
+
+
+    <title>Writing a simple lisp in LabVIEW and Nim | JorisL blog</title>
+    <link rel="stylesheet" type="text/css" href="/static/pico.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/marmite.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/colorschemes/github.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/custom.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/github.min.css" id="highlightjs-theme" />
+
+
+
+        <link rel="alternate" type="application/rss+xml" title="index" href="/index.rss">
+    <link rel="alternate" type="application/rss+xml" title="Board & card game rules" href="/gamerules.rss">
+    <link rel="alternate" type="application/rss+xml" title="Reference" href="/reference.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: rules" href="/tag-rules.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: standard 52-card deck" href="/tag-standard-52-card-deck.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: solitaire" href="/tag-solitaire.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: programming" href="/tag-programming.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Julia" href="/tag-julia.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: cheat sheet" href="/tag-cheat-sheet.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: electronics" href="/tag-electronics.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: keyboard" href="/tag-keyboard.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: juggling" href="/tag-juggling.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Nim" href="/tag-nim.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Excel" href="/tag-excel.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: unicycling" href="/tag-unicycling.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: LabVIEW" href="/tag-labview.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: scam" href="/tag-scam.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: blindsolving" href="/tag-blindsolving.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: lisp" href="/tag-lisp.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: rubiks" href="/tag-rubiks.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Z3" href="/tag-z3.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: python" href="/tag-python.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Emacs" href="/tag-emacs.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: helix" href="/tag-helix.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2025" href="/archive-2025.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2024" href="/archive-2024.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2023" href="/archive-2023.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2022" href="/archive-2022.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2021" href="/archive-2021.rss">
+    
+
+    
+
+    
+    
+</head>
+<body>
+    
+    <main class="container">
+        
+        <header class="header-content">
+            <nav class="header-nav">
+                <ul class="header-name">
+                    <li>
+                        <hgroup class="h-card">
+                            <h2>
+                                <a href="/" class="contrast p-name u-url">
+                                    
+                                        JorisL blog
+                                    
+                                </a>
+                            </h2>
+                             <p class="p-note">My personal blog</p> 
+                        </hgroup>
+                    </li>
+                </ul>
+                <button id="menu-toggle" class="hamburger">&#9776;</button>
+
+                <ul class="header-menu" id="header-menu">
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/tags.html">Tags</a>
+                        
+                    </li>
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/archive.html">Archive</a>
+                        
+                    </li>
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/streams.html">Streams</a>
+                        
+                    </li>
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/about.html">About</a>
+                        
+                    </li>
+                    
+                    <li><span class="theme-toggle secondary" title="dark mode">&#9789;</span></li>
+                    
+                    <li><a href="#" id="search-toggle" class="secondary" title="Search (Ctrl + Shift + F)"> <span class="search-txt">Search</span><span class="search-magnifier"></span></a></li>
+                    
+                    <div class="underline"></div>
+                </ul>
+            </nav>
+            
+            <div class="marmite-background-overlay" id="overlay-close"></div>
+            <div class="marmite-search-bar hidden">
+                <span></span>
+                <button class="marmite-close-button" id="search-close">X</button>
+                <input placeholder="Search" id="marmite-search-input" />
+                <div class="marmite-search-bar-result">
+                    <ul id="marmite-search-bar-result"></ul>
+                </div>
+            </div>
+            
+        </header>
+        
+        <section class="main-content">
+            
+
+
+
+<article class="h-entry">
+  <data class="p-name" value="Writing a simple lisp in LabVIEW and Nim"></data>
+  <a class="u-url" href="/writing-a-simple-lisp-in-labview-and-nim.html" style="display: none;"></a>
+  
+  <time class="dt-published" datetime="2023-01-15T00:00:00+00:00" style="display: none;">January 2023</time>
+  
+
+  
+
+  
+
+
+<div class="content-title" id="title">
+    <h1>Writing a simple lisp in LabVIEW and Nim</h1> 
+    
+
+
+<span class="content-date">
+    <small> January 2023 - &#10710; 4 min</small>
+</span>
+
+</div>
+
+  
+  
+  <div class="content-toc">
+    <a href="#" id="toc"></a>
+    <details>
+    <summary>🗒️</summary>
+    <ul>
+<ul>
+<li><a href="#labview">LabVIEW</a></li>
+<li><a href="#nim">Nim</a></li>
+</ul>
+</ul>
+
+    </details>
+  </div>
+  
+
+  <div class="content-html e-content"><!-- Content Injected to every content markdown header -->
+<p>Learning how to make an interpreter for a custom programming language was a challenge I wanted to do for quite some time.
+Due to it's simplicity in parsing, and the number of resources available, it was a simple choice to make the custom language a lisp-like language.</p>
+<h2><a href="#labview" aria-hidden="true" class="anchor" id="labview"></a>LabVIEW</h2>
+<p><a href="https://github.com/JorisL/labview_lisp">The first version</a> of my custom interpreter was made in LabVIEW, for the following reasons:</p>
+<ul>
+<li>LabVIEW is often used at my job, but it had been a while since I programmed in it myself.
+So I wanted to fresh up my knowledge.</li>
+<li>There are lots of resources online, which I definitely needed to use, showing how to implement a lisp in a common language (Python, C, etc.).
+Trying to implement it myself in LabVIEW, which uses a different paradigm than almost all other languages <sup class="footnote-ref"><a href="#fn-1" id="fnref-1" data-footnote-ref>1</a></sup>, forces me to actually understand what the examples show.</li>
+<li>LabVIEW is arguably one of the worst (e.g. fun) languages suited for this kind of task.
+And there are examples of people implementing a lisp in <a href="https://github.com/kanaka/mal">many languages</a>, I didn't yet see anyone who implemented something like this in LabVIEW.</li>
+</ul>
+<p>In this version of my programming language, I was eventually able to do things as defining functions and applying those functions to data.</p>
+<pre><code class="language-lisp">(do
+ ; get first element from a list
+ (define first
+   (lambda (x)
+     (nth 0 x)))
+
+ ; get remainder of list after first element
+ (define rest
+   (lambda (x)
+     (nthrest 0 x)))
+
+ ; insert element at the end of a list
+ (define append
+   (lambda (lst elt)
+     (insert lst (len lst) elt)))
+
+ ; apply return a list with func applied to each element of lst
+ (define map
+   (lambda (func lst)
+     (do
+       (define lstout (list))
+       (while (not (= lst (list)))
+         (do
+           (define lstout (append lstout
+                                  (func (first lst))))
+           (define lst (rest lst))))
+       lstout)))
+
+
+  (map (lambda (x) (* x x))
+      (list 1 2 3 4 5 6)))
+
+; returns (1 4 9 16 25 36)
+
+</code></pre>
+<p>However, the implementation of this language needs a lot of recursion, and the number of recursive calls to VI's is severely limited.
+Therefore the complexity of the program that can run are really limited.</p>
+<h2><a href="#nim" aria-hidden="true" class="anchor" id="nim"></a>Nim</h2>
+<p>After implementing an initial version in LabVIEW, I wanted to make an interpreter that would actually be capable of running 'something'.
+For <a href="https://github.com/JorisL/nim_lisp">this implementation</a> I'd chosen <a href="https://nim-lang.org">Nim</a>, as it is a relatively high-level, but still quick and compiled, language.
+This project was a good way of trying out the language.</p>
+<p>In this version of the language I was able to add some additional functionalities, such as Macro support.
+Using lisp macro's you are able to add features and structures to the language that can't be implemented as a function during execution.
+See the snippet below from the 'standard library'; In the Nim interpreter I did not define how it should handle an <code>and</code> or <code>or</code> keyword,
+and these cannot be implemented as functions<sup class="footnote-ref"><a href="#fn-2" id="fnref-2" data-footnote-ref>2</a></sup>.
+But using macro's it is possible to define how these can be rewritten as, in this case, an if statement (which in turn is also defined as a macro).</p>
+<pre><code class="language-lisp"> (define and
+   (macro
+    (a b)
+    (quasiquote
+     (if (unquote a) (unquote b) nil))))
+
+ (define or
+   (macro
+    (a b)
+    (quasiquote
+     (if (unquote a) (unquote a) (unquote b)))))
+</code></pre>
+<p>In order to test that my programming language could actually do 'something', I <a href="https://github.com/JorisL/nim_lisp/blob/main/examples/bf/brainfuck.nlisp">implemented another programming language in it</a>.
+Note that efficiency was not the main goal of this project 😄<sup class="footnote-ref"><a href="#fn-3" id="fnref-3" data-footnote-ref>3</a></sup>.</p>
+<hr />
+<!-- Content Injected to every content markdown footer -->
+<section class="footnotes" data-footnotes>
+<ol>
+<li id="fn-1">
+<p>LabVIEW uses the dataflow programming paradigm, while most languages are instead of procedural, functional, and/or object oriented. <a href="#fnref-1" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>
+</li>
+<li id="fn-2">
+<p>A function always evaluates it's arguments. For example <code>(+ 2 (* 6 7))</code> first evaluates to <code>(+ 2 42)</code>.
+But in, for example, an <code>and</code> statement, you only want the 2nd argument to be evaluated if the first argument is true.
+Therefore it is not possible to implement an <code>and</code> statement, among others, as a function. <a href="#fnref-2" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="2" aria-label="Back to reference 2">↩</a></p>
+</li>
+<li id="fn-3">
+<p>Eventually I ran a brainfuck interpreter in my brainfuck interpreter in my lisp, and used that to run a brainfuck hello world program.
+That one took around 24 hours to run. <a href="#fnref-3" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="3" aria-label="Back to reference 3">↩</a></p>
+</li>
+</ol>
+</section>
+</div>
+  
+  <footer class="data-tags-footer">
+
+    <div class="content-authors-flex">
+      <div class="content-authors-full">
+        
+
+      </div>
+
+      <div class="date-tags-container">
+        <div class="content-date">
+          
+
+
+<span class="content-date">
+    <small> January 2023 - &#10710; 4 min</small>
+</span>
+
+          
+        </div>
+
+        <ul class="content-tags">
+          
+          
+          
+          <li><a href="/tag-programming.html" class="p-category">programming</a></li>
+          
+          
+          
+          <li><a href="/tag-lisp.html" class="p-category">lisp</a></li>
+          
+          
+          
+          <li><a href="/tag-labview.html" class="p-category">LabVIEW</a></li>
+          
+          
+          
+          <li><a href="/tag-nim.html" class="p-category">Nim</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </footer>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+        </section>
+        
+        <footer class="footer-content grid">
+            
+            
+        </footer>
+        
+    </main>
+
+    <script src="/static/marmite.js"></script>
+    <script src="/static/custom.js"></script>
+    
+    <script type="module" src="/static/search.js"></script>
+    
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+<script>
+  hljs.highlightAll();
+</script>
+
+
+
+</body>
+</html>

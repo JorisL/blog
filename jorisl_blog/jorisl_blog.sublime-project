@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"build_systems":
+    [
+        {
+            "name": "Marmite",
+            "shell_cmd": "rm -r \"$project_path/site\" | marmite \"$project_path\""
+        }
+    ]
+}

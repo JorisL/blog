@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>JorisL blog</title><link>http://</link><description>My personal blog</description><pubDate>Sun, 15 Jan 2023 00:00:00 GMT</pubDate><lastBuildDate>Mon, 28 Jul 2025 12:10:42 GMT</lastBuildDate><generator>marmite</generator><item><title>Writing a simple lisp in LabVIEW and Nim</title><link>http:///writing-a-simple-lisp-in-labview-and-nim.html</link><description><![CDATA["Making my own programming language, first in LabVIEW and then in Nim."]]></description><category>programming</category><category>lisp</category><category>LabVIEW</category><category>Nim</category><guid>http:///writing-a-simple-lisp-in-labview-and-nim.html</guid><pubDate>Sun, 15 Jan 2023 00:00:00 GMT</pubDate><source url="http://">archive-2023</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p>Learning how to make an interpreter for a custom programming language was a challenge I wanted to do for quite some time.
+Due to it's simplicity in parsing, and the number of resources available, it was a simple choice to make the custom language a lisp-like language.</p>
+<h2><a href="#labview" aria-hidden="true" class="anchor" id="labview"></a>LabVIEW</h2>
+<p><a href="https://github.com/JorisL/labview_lisp">The first version</a> of my custom interpreter was made in LabVIEW, for the following reasons:</p>
+<ul>
+<li>LabVIEW is often used at my job, but it had been a while since I programmed in it myself.
+So I wanted to fresh up my knowledge.</li>
+<li>There are lots of resources online, which I definitely needed to use, showing how to implement a lisp in a common language (Python, C, etc.).
+Trying to implement it myself in LabVIEW, which uses a different paradigm than almost all other languages <sup class="footnote-ref"><a href="#fn-1" id="fnref-1" data-footnote-ref>1</a></sup>, forces me to actually understand what the examples show.</li>
+<li>LabVIEW is arguably one of the worst (e.g. fun) languages suited for this kind of task.
+And there are examples of people implementing a lisp in <a href="https://github.com/kanaka/mal">many languages</a>, I didn't yet see anyone who implemented something like this in LabVIEW.</li>
+</ul>
+<p>In this version of my programming language, I was eventually able to do things as defining functions and applying those functions to data.</p>
+<pre><code class="language-lisp">(do
+ ; get first element from a list
+ (define first
+   (lambda (x)
+     (nth 0 x)))
+
+ ; get remainder of list after first element
+ (define rest
+   (lambda (x)
+     (nthrest 0 x)))
+
+ ; insert element at the end of a list
+ (define append
+   (lambda (lst elt)
+     (insert lst (len lst) elt)))
+
+ ; apply return a list with func applied to each element of lst
+ (define map
+   (lambda (func lst)
+     (do
+       (define lstout (list))
+       (while (not (= lst (list)))
+         (do
+           (define lstout (append lstout
+                                  (func (first lst))))
+           (define lst (rest lst))))
+       lstout)))
+
+
+  (map (lambda (x) (* x x))
+      (list 1 2 3 4 5 6)))
+
+; returns (1 4 9 16 25 36)
+
+</code></pre>
+<p>However, the implementation of this language needs a lot of recursion, and the number of recursive calls to VI's is severely limited.
+Therefore the complexity of the program that can run are really limited.</p>
+<h2><a href="#nim" aria-hidden="true" class="anchor" id="nim"></a>Nim</h2>
+<p>After implementing an initial version in LabVIEW, I wanted to make an interpreter that would actually be capable of running 'something'.
+For <a href="https://github.com/JorisL/nim_lisp">this implementation</a> I'd chosen <a href="https://nim-lang.org">Nim</a>, as it is a relatively high-level, but still quick and compiled, language.
+This project was a good way of trying out the language.</p>
+<p>In this version of the language I was able to add some additional functionalities, such as Macro support.
+Using lisp macro's you are able to add features and structures to the language that can't be implemented as a function during execution.
+See the snippet below from the 'standard library'; In the Nim interpreter I did not define how it should handle an <code>and</code> or <code>or</code> keyword,
+and these cannot be implemented as functions<sup class="footnote-ref"><a href="#fn-2" id="fnref-2" data-footnote-ref>2</a></sup>.
+But using macro's it is possible to define how these can be rewritten as, in this case, an if statement (which in turn is also defined as a macro).</p>
+<pre><code class="language-lisp"> (define and
+   (macro
+    (a b)
+    (quasiquote
+     (if (unquote a) (unquote b) nil))))
+
+ (define or
+   (macro
+    (a b)
+    (quasiquote
+     (if (unquote a) (unquote a) (unquote b)))))
+</code></pre>
+<p>In order to test that my programming language could actually do 'something', I <a href="https://github.com/JorisL/nim_lisp/blob/main/examples/bf/brainfuck.nlisp">implemented another programming language in it</a>.
+Note that efficiency was not the main goal of this project 😄<sup class="footnote-ref"><a href="#fn-3" id="fnref-3" data-footnote-ref>3</a></sup>.</p>
+<hr />
+<!-- Content Injected to every content markdown footer -->
+<section class="footnotes" data-footnotes>
+<ol>
+<li id="fn-1">
+<p>LabVIEW uses the dataflow programming paradigm, while most languages are instead of procedural, functional, and/or object oriented. <a href="#fnref-1" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>
+</li>
+<li id="fn-2">
+<p>A function always evaluates it's arguments. For example <code>(+ 2 (* 6 7))</code> first evaluates to <code>(+ 2 42)</code>.
+But in, for example, an <code>and</code> statement, you only want the 2nd argument to be evaluated if the first argument is true.
+Therefore it is not possible to implement an <code>and</code> statement, among others, as a function. <a href="#fnref-2" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="2" aria-label="Back to reference 2">↩</a></p>
+</li>
+<li id="fn-3">
+<p>Eventually I ran a brainfuck interpreter in my brainfuck interpreter in my lisp, and used that to run a brainfuck hello world program.
+That one took around 24 hours to run. <a href="#fnref-3" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="3" aria-label="Back to reference 3">↩</a></p>
+</li>
+</ol>
+</section>
+]]></content:encoded></item></channel></rss>

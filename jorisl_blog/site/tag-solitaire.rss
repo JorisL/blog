@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>JorisL blog</title><link>http://</link><description>My personal blog</description><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><lastBuildDate>Mon, 28 Jul 2025 12:10:42 GMT</lastBuildDate><generator>marmite</generator><item><title>Pixies solo rules</title><link>http:///gamerules-pixies-solo-rules.html</link><description><![CDATA["Solo rules for the card game Pixies."]]></description><category>rules</category><category>solitaire</category><guid>http:///gamerules-pixies-solo-rules.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">tag-solitaire</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<h1><a href="#pixies-solo-rules" aria-hidden="true" class="anchor" id="pixies-solo-rules"></a>Pixies Solo Rules</h1>
+<p><em>These rules are based on the <a href="https://boardgamegeek.com/thread/3282756/2024-solomode-breeze">Breeze solo mode by Michiel de Wit</a>.</em></p>
+<h2><a href="#overview" aria-hidden="true" class="anchor" id="overview"></a>Overview</h2>
+<p>In this solo mode, you play a 2-player game against a bot.
+As normal, 3 rounds are played, each with different scoring for connected zones.
+The bot doesn't make a 3x3 area, but gathers cards in a single pile, with its own scoring rules.</p>
+<p>From the players perspective, the round sequence is the same as for a normal 2 player game,
+except for the 4 cards being drafted must be put from left-to-right when revealed.</p>
+<p>A round ends when the player has no open slots left over.</p>
+<h2><a href="#bot-turn" aria-hidden="true" class="anchor" id="bot-turn"></a>Bot turn</h2>
+<p>During the bot's turn:</p>
+<ol>
+<li>Take the card with the highest number from the drafting pool, with the leftmost card winning ties.</li>
+<li>If there are still 2 or 3 cards left in the drafting pool, put the taken card face up on the bot's pile.
+Otherwise discard the card face-down in a discard pile.</li>
+</ol>
+<h2><a href="#bot-scoring" aria-hidden="true" class="anchor" id="bot-scoring"></a>Bot scoring</h2>
+<p>Go through the bot's (face up) pile, and calculate the score as follows:</p>
+<ul>
+<li>Add up all card values, as if all cards where validated.</li>
+<li>Add up all positive and negative points printed on the cards as normal.</li>
+<li>See what color the bot has most (taking multi-colored cards into account),
+and calculate the largest color zone (2, 3, or 4 points per card, depending on round) as if these cards where all connected.</li>
+</ul>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>Loot the Loop rules</title><link>http:///gamerules-loot-the-loop-rules.html</link><description><![CDATA["Rules for the card game Loot the Loop."]]></description><category>rules</category><category>solitaire</category><category>standard 52-card deck</category><guid>http:///gamerules-loot-the-loop-rules.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">tag-solitaire</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p><em>Rules taken from the <a href="https://boardgamegeek.com/thread/2587399/isaludo-ten-new-solo-card-games-playable-with-a-st">Isaludo solo collection</a></em></p>
+<h2><a href="#components" aria-hidden="true" class="anchor" id="components"></a>Components</h2>
+<ul>
+<li>A standard 52-card deck with one joker.</li>
+<li>Aces are <strong>jewels</strong> you're trying to loot. Number cards (2-10) are minor <strong>trinkets</strong> in the temple. Face cards are <strong>traps</strong> you must avoid, while the Joker is the temple <strong>exit</strong>.</li>
+</ul>
+<h2><a href="#setup" aria-hidden="true" class="anchor" id="setup"></a>Setup</h2>
+<ol>
+<li>Cut the deck in 3 equal face-down piles, flip over the top 2 cards for each pile, and stack the piles back in your chosen order. Hold this deck in your hand.</li>
+<li>Leave space on the table for 3 cards (your <strong>notes</strong>) and a <strong>score pile</strong>.</li>
+</ol>
+<h2><a href="#gameplay" aria-hidden="true" class="anchor" id="gameplay"></a>Gameplay</h2>
+<p>The game is played over a series of turns. Each turn, you must perform <strong>exactly one</strong> of the following four actions. What actions are allowed depends on the top or top two cards of the deck.</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Can only be performed if...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Look Around</td>
+<td>The top card of the deck is face down</td>
+</tr>
+<tr>
+<td>Explore</td>
+<td>Either or both of the top two cards in the deck are face-up number cards (trinkets)</td>
+</tr>
+<tr>
+<td>Mark a path</td>
+<td>The top card of the deck is a face up number card (trinket), and you have less than three cards in your notes</td>
+</tr>
+<tr>
+<td>Return to a marked path</td>
+<td>You have at least one marked path in your notes</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="#look-around" aria-hidden="true" class="anchor" id="look-around"></a>Look Around</h3>
+<p>Turn the <strong>top two cards</strong> of the deck face up, careful to maintain their order.
+If the second card of the deck is already face up, just flip the top card and leave the second one as is.</p>
+<p>You may ONLY perform this action if the top card of the deck is face down.</p>
+<h3><a href="#explore" aria-hidden="true" class="anchor" id="explore"></a>Explore</h3>
+<p>If either or both of the top two cards in the deck are face-up number cards (trinkets), choose one of those cards' values.
+Count exactly that many cards from the top of the deck and move them to the bottom, maintaining their order.
+Include the aforementioned top two cards in the count.</p>
+<p>If there is only one face-up number card among the top two cards of the deck, you may only travel by that count.
+If neither of the two top cards of the deck are face up number cards, you may not use the explore action at all.</p>
+<p>Each time you explore, after you move the required cards to the back, take note of the new top card of your deck.
+This is the room you land in.</p>
+<ul>
+<li>If it is a <strong>face-down card</strong>, nothing happens.</li>
+<li>If it is a <strong>face-up face card</strong> (trap), you lose the game.</li>
+<li>If it is a <strong>face-up ace</strong> (jewel) or trinket (number card), you nab it! You must move that card to your score pile.</li>
+<li>If it is a <strong>face-up joker</strong> (exit) and you have all four aces in your score pile, you exit the temple and end the game. Otherwise, nothing happens.</li>
+</ul>
+<h3><a href="#mark-a-path" aria-hidden="true" class="anchor" id="mark-a-path"></a>Mark a Path</h3>
+<p>If the top card of the deck is a number card (trinket), remove that card from the deck and place that card face up in front of you on the table in your notes.
+You can mark a maximum of <strong>three</strong> paths at any one time.</p>
+<p>Remember that treasures you land on are removed from the temple, so the longer you stay the greater the density of traps!</p>
+<h3><a href="#return-to-a-previously-marked-path" aria-hidden="true" class="anchor" id="return-to-a-previously-marked-path"></a>Return to a Previously Marked Path</h3>
+<p>Return a path card of your choice from your notes to the top of the deck, face up.</p>
+<p>Marking paths and returning to paths changes the top cards of your deck, and is the primary way to manipulate movement options when trying to land on specific cards.</p>
+<p>Remember that marking and returning are separate actions.
+If your notes are already full, you can't &quot;swap&quot; a saved note and the top card of the deck.</p>
+<h2><a href="#game-end" aria-hidden="true" class="anchor" id="game-end"></a>Game End</h2>
+<p>Continue exploring the temple and hunting for the jewels (aces) and exit (joker).
+If you get stuck in the temple and can't move, or all movement choices you have will land you on a trap, you lose the game.</p>
+<p><strong>If you land on the face-up exit</strong> after an explore action, check your score pile.
+<strong>If you already have all four jewels</strong>, you immediately escape the temple and win the game.</p>
+<p>Your score is the total number of cards in your score pile, including trinkets.</p>
+<h2><a href="#other-notes" aria-hidden="true" class="anchor" id="other-notes"></a>Other notes</h2>
+<ul>
+<li>Even with all aces and joker face-up, it can be interesting to stay in the temple to gather more trinkets.</li>
+<li>You are free to look through the deck and all its face up cards at any time. You may even count cards to plan routes. You may not look at any face down cards, however.</li>
+<li>When traveling, it’s helpful to first count off the total number of cards to move with your thumb, then transfer the whole block of cards to the back. It's easier than doing it one by one.</li>
+</ul>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>Sea Salt &amp; Paper solo rules</title><link>http:///gamerules-sea-salt-paper-solo-rules.html</link><description><![CDATA["Solo rules for the card game Sea Salt & Paper."]]></description><category>rules</category><category>solitaire</category><guid>http:///gamerules-sea-salt-paper-solo-rules.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">tag-solitaire</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<h1><a href="#sea-salt--paper-solo-rules" aria-hidden="true" class="anchor" id="sea-salt--paper-solo-rules"></a>Sea Salt &amp; Paper Solo Rules</h1>
+<p><em>These rules are based on the <a href="https://boardgamegeek.com/thread/3382394/dumb-ai-solo-version">solo rules by @EricKenneth</a>.</em></p>
+<h2><a href="#overview" aria-hidden="true" class="anchor" id="overview"></a>Overview</h2>
+<p>In this solo mode, you play a 2-player game against a bot.
+This game consists of a single round, where you can stop the round once you reach 12 points.
+The bot's actions are determined by a d6 dice, and this dice also limits the actions on your turn.
+The bot does not play cards, but gathers them in a face-down pile. It's score is determined using special scoring rules.</p>
+<h2><a href="#setup" aria-hidden="true" class="anchor" id="setup"></a>Setup</h2>
+<ol>
+<li>Place a mermaid card sideways representing the bot. Its cards will be placed right below it.</li>
+<li>Place a d6 on the mermaid area for now.</li>
+<li>Place the deck and the two discards as usual to the right of the mermaid's area.</li>
+</ol>
+<h2><a href="#special-rules" aria-hidden="true" class="anchor" id="special-rules"></a>Special rules</h2>
+<ul>
+<li>The player always starts the game.</li>
+<li>Whenever a discard pile is empty, immediately fill it with the top card of the deck.</li>
+<li>The player can't choose to draw from a pile if the dice is on that pile (taking a card from that pile using the crab action is allowed).</li>
+<li>When playing the swimmer-shark combo, shuffle the bot's pile and take a random card.</li>
+<li>When playing the swimmer-jellyfish combo, the bot takes the top card from the draw pile in its turn. The dice does not change position.</li>
+</ul>
+<h2><a href="#bots-turn" aria-hidden="true" class="anchor" id="bots-turn"></a>Bot's turn</h2>
+<p>During the bot's turn:</p>
+<ol>
+<li>Roll the dice, and put the top card from the corresponding pile face down on the bot's pile.
+<ul>
+<li>1 or 2: deck.</li>
+<li>3 or 4: first discard pile.</li>
+<li>5 or 6: second discard pile.</li>
+</ul>
+</li>
+<li>Place the dice on the pile the card was taken from.</li>
+</ol>
+<h2><a href="#ending-the-game" aria-hidden="true" class="anchor" id="ending-the-game"></a>Ending the game</h2>
+<p>Once the player reaches 12 points, they can choose to end the game.
+Then take a final turn for the bot.</p>
+<h2><a href="#scoring" aria-hidden="true" class="anchor" id="scoring"></a>Scoring</h2>
+<p>Scoring for the player is according to the standard rules (without last-chance scoring).</p>
+<p>To count the bot's score:</p>
+<ol>
+<li>Make as many duo-card pairs as possible, adding sea stars if possible.</li>
+<li>Count score using the standard rules, also including the mermaid card representing the bot.</li>
+<li>Add 1 point for every single duo-card.</li>
+</ol>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>Gridcannon rules</title><link>http:///gamerules-gridcannon-rules.html</link><description><![CDATA["Rules for the card game Gridcannon."]]></description><category>rules</category><category>solitaire</category><category>standard 52-card deck</category><guid>http:///gamerules-gridcannon-rules.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">tag-solitaire</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p><em>Rules taken from <a href="https://www.pentadact.com/2019-08-20-gridcannon-a-single-player-game-with-regular-playing-cards/#Update">here</a></em></p>
+<h2><a href="#setup" aria-hidden="true" class="anchor" id="setup"></a>Setup</h2>
+<ol>
+<li>Start with a shuffled deck, including jokers.</li>
+<li>With the deck face-down, draw cards from the top and lay them out face-up in a 3×3 grid. If you draw any royals, aces or jokers during this, put them on a separate pile and keep drawing til you have made the grid of just number cards.</li>
+<li>If you did draw some royals, you now place them the same way we will when playing: put it outside the grid, adjacent to the grid card it is most similar to. ‘Most similar’ means:
+<ol>
+<li>Highest value card of the same suit</li>
+<li>If none, highest value card of the same color</li>
+<li>If none, highest value card</li>
+<li>If there is a tie, or most similar card is on a corner, you can choose between the equally valid positions</li>
+</ol>
+</li>
+<li>Any aces and jokers you drew during set up, keep them face-up to one side. These are Ploys you can play whenever you like, rules below.</li>
+<li>Once you have a 3×3 grid of number cards, you may choose one to replace if you like: put it on the bottom of the draw pile and draw a new card to replace it.</li>
+</ol>
+<h2><a href="#the-goal" aria-hidden="true" class="anchor" id="the-goal"></a>The goal</h2>
+<p>Find and kill all the royals.</p>
+<h2><a href="#play" aria-hidden="true" class="anchor" id="play"></a>Play</h2>
+<p>Draw the top card from the deck.</p>
+<ul>
+<li><strong>If it is a royal:</strong> use placement rule above.</li>
+<li><strong>If it has value 2-10:</strong> you must place it on the grid. It can go on any card with the same or lower value, regardless of suit.</li>
+<li><strong>If it is an ace or joker:</strong> keep it to one side, see <strong>Ploys</strong>.</li>
+</ul>
+<p><strong>Killing royals:</strong> if you are able to place a card on the grid opposite a royal – so there are two cards between – those two cards <strong>Attack</strong> the royal.
+The sum of their values must be at least as much as health of the royal to kill them:
+if it is not, you can still place the card, but the royal is unaffected.
+The value of the card you just placed is not part of the Attack, only the two between.</p>
+<ul>
+<li><strong>Jacks:</strong> 11 health. The cards Attacking can be any suit.</li>
+<li><strong>Queens:</strong> 12 health. The cards Attacking must match the color of the queen to count.</li>
+<li><strong>Kings:</strong> 13 health. The cards Attacking must match the suit of the king to count.</li>
+</ul>
+<p>If you killed the royal, turn it face down but don't remove it – new royals you draw still cannot be placed in that spot.
+Once every spot around the grid has a dead royal in it (12 total) you have won.</p>
+<p><strong>Ploys:</strong></p>
+<ul>
+<li><strong>Aces are Extractions:</strong> at any time you can use up one of the aces you have drawn to pick up one stack of cards from the grid and put them face-down at the bottom of your draw pile. You can do this even after drawing a card and before placing it. Turn the ace face-down to remember you have used it.</li>
+<li><strong>Jokers are Reassignments:</strong> at any time you can use up one you have drawn to move the top card of one stack on the grid to another position. The place you move it to must be a valid spot to play the card, and placing it can trigger an Attack the same way a normal play can. Turn the joker face-down to remember you have used it.</li>
+</ul>
+<p><strong>If you cannot place a card:</strong> and you have no Ploys to use, you must add the card as <strong>Armour</strong> to the royal it is most similar to (lowest value royal of same suit, failing that lowest of same color, etc). It increases their health by the value of the card. So a King with a 3 as armor now has 13 + 3 = 16 health. You can add armor to a royal that already has armor – it stacks. If a royal ends up with 20+ health (or 19+ for a King), that is a natural loss as there is no longer any way to kill them.</p>
+<p><strong>If there are no living royals on the table:</strong> if every spot around the grid has a dead royal on it – all 12 – you have won! If not, just keep drawing cards until you find a royal, placing the cards in a face-up pile as you go. Once you find a royal, place it, then add the cards you cycled through to the bottom of your deck.</p>
+<p><strong>If the draw pile runs out:</strong> and you have not killed all the royals, use any ploys you have left to fix the situation if you can. If you are out of both cards and ploys and not all royals are dead, you have lost.</p>
+<h2><a href="#scoring" aria-hidden="true" class="anchor" id="scoring"></a>Scoring</h2>
+<p>If you have killed all the royals without running out of cards, your score is how many Ploys you have left unspent.
+So the maximum score is 6.</p>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>The Emissary rules</title><link>http:///gamerules-the-emissary-rules.html</link><description><![CDATA["Rules for the card game The Emissary."]]></description><category>rules</category><category>solitaire</category><category>standard 52-card deck</category><guid>http:///gamerules-the-emissary-rules.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">tag-solitaire</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p><em>Rules taken from the <a href="https://boardgamegeek.com/thread/2587399/isaludo-ten-new-solo-card-games-playable-with-a-st">Isaludo solo collection</a>. This game holds the core of the game <a href="https://boardgamegeek.com/boardgame/334590/for-northwood-a-solo-trick-taking-game">For Northwood</a>.</em></p>
+<h2><a href="#components" aria-hidden="true" class="anchor" id="components"></a>Components</h2>
+<ul>
+<li>A standard 52-card deck without jokers.</li>
+</ul>
+<h2><a href="#setup" aria-hidden="true" class="anchor" id="setup"></a>Setup</h2>
+<p>Separate the 9s and 10s (<strong>kingdoms</strong>) and place these eight cards face down in a row (they're just placeholders; the value doesn't matter).
+Separate the twelve face cards.
+Shuffle the Kings and Queens together (<strong>rulers</strong>) and deal them face up from left to right, one on top of each kingdom.</p>
+<p>Set the four Jacks aside in a stack; these cards represent you and your <strong>advisors</strong>.
+Shuffle the remaining 32 cards into a face-down <strong>deck</strong>.</p>
+<h2><a href="#objective" aria-hidden="true" class="anchor" id="objective"></a>Objective</h2>
+<p>In <em>The Emissary</em>, you are a young noble sent by your father to gather support from eight neighboring kingdoms.
+In each kingdom, you engage in a series of debates with their ruler.
+Using the right amount of force and deference, you must win exactly a certain number of debates per kingdom.
+Succeed and you may call upon the ruler for future support; fail even once and lose the game.</p>
+<h2><a href="#gameplay" aria-hidden="true" class="anchor" id="gameplay"></a>Gameplay</h2>
+<p>The core game loop consists of 1) visiting a kingdom and 2) playing out a series of debates in that kingdom against its ruler.</p>
+<h2><a href="#choosing-the-kingdom-to-visit" aria-hidden="true" class="anchor" id="choosing-the-kingdom-to-visit"></a>Choosing the kingdom to visit</h2>
+<p>Draw eight cards from the deck.
+Review the cards in your hand, then choose which kingdom to visit.
+Place your stack of advisors under that kingdom to mark that you're visiting.
+You must visit each kingdom once and only once per game.</p>
+<p>The position of that kingdom along the line determines how many debates you must <strong>exactly</strong> win to get support from that ruler.
+The leftmost royal needs one win, the next two, and so on.
+You must win eight debates in the rightmost kingdom.</p>
+<p>The ruler's suit represents their favorite topic; for this kingdom, this suit <strong>trumps</strong> all other topics of conversation.</p>
+<p>Once you have chosen a kingdom to visit, you now play out the series of debates.</p>
+<h2><a href="#the-debates" aria-hidden="true" class="anchor" id="the-debates"></a>The Debates</h2>
+<p>Place the top card of the draw deck face-up into a discard pile.
+The ruler is now talking about a topic - you must respond!
+Play a single card from your hand in response.
+Playing a card follows standard trick-taking rules:</p>
+<ul>
+<li>You must play a card in your hand with the same suit (topic) as the ruler's card if you are able.</li>
+<li>If and only if you cannot follow suit, you may play any card.</li>
+</ul>
+<p>You win the debate if either:</p>
+<ul>
+<li>You played a higher card of the same topic (suit), or</li>
+<li>The debate card isn't of the ruler's favorite topic and you responded with any card of their favorite topic. Way to go, you suckup.</li>
+</ul>
+<p>Aces are low and have value 1.
+If you win the debate, place the card you played in a separate scoring pile.
+If you lose the debate, instead place your card in the discard pile as well.
+Keep engaging in debates until you run out of cards in your hand.
+Once your hand is empty, the number of cards in your scoring pile shows how many debates you have won for that kingdom.</p>
+<h2><a href="#advisor-abilities" aria-hidden="true" class="anchor" id="advisor-abilities"></a>Advisor Abilities</h2>
+<p>To help control the number of debates you win, each of your Jack advisors has a special ability you can activate, once per kingdom.
+<strong>Before the first debate or between any two debates</strong>, you may choose to activate advisor abilities by turning a face-up Jack face down.
+(Activate it before the ruler card is dealt; you can't use abilities 'in response').</p>
+<p>It's up to you whether you want to use abilities earlier when you have more cards in hand, toward the end, or a mix of both.
+Resolve each ability fully before deciding to use another one.</p>
+<p>The ability depends on the suit of the card used:</p>
+<ul>
+<li><strong>Hearts</strong> (diplomacy) - Discard all cards in your hand that match the current kingdom's trump suit.</li>
+<li><strong>Clubs</strong> (military) - Draw a card for each club in your hand.</li>
+<li><strong>Spades</strong> (politics) - Swap the current ruler with the ruler of an unvisited kingdom. (This changes the trump suit for all debates of this kingdom moving forward, and also for that other kingdom when you visit it). This ability does nothing when you're visiting the final kingdom.</li>
+<li><strong>Diamonds</strong> (commerce) - Draw two cards, then choose and discard two cards from your hand.</li>
+</ul>
+<p>Hearts and clubs abilities change the number of cards in your hand, and therefore change the total number of debates you need to play in a kingdom.
+The target win number remains the same, however.</p>
+<p>If you run out of cards in the draw pile, shuffle the discard pile and continue using it.</p>
+<p>When you run out of cards in your hand, if you have won exactly the number of debates equal to the kingdom's number, congratulations!
+Add that ruler face up beneath your advisors.
+In future kingdoms, you may also turn a supporting <strong>king or queen face down</strong> to use their suit's ability.
+The only difference is that unlike Jacks whose abilities you can use once per kingdom, kings
+and queens are <strong>one-time-use</strong> abilities.
+They're still very useful in a pinch, though.</p>
+<p>Shuffle all the cards in the discard, scoring pile, and draw deck together.
+Turn all spent Jacks back face up (not kings and queens), draw eight new cards, and choose the next kingdom to visit.</p>
+<h2><a href="#ending-the-game" aria-hidden="true" class="anchor" id="ending-the-game"></a>Ending the game</h2>
+<p>Continue visiting the kingdoms one by one, convincing (and leveraging) allies as needed.
+If you end any kingdom without winning the exact number of debates needed, you <strong>lose the game</strong>.</p>
+<p>Note that the central kingdoms are slightly easier, with kingdom 1 and 8 being very hard to win.
+Grab support before attempting these, and approach them when you're dealt a favorable hand!</p>
+<p>If you <strong>get support from all eight kingdoms</strong>, you win the game.
+Whether you win or lose, your score is the number of kingdoms won plus the number of supporting kings/queens with unused abilities, for a perfect score of 8+8=16 points.</p>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item></channel></rss>

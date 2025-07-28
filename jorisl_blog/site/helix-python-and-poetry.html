@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content="Marmite" />
+    
+<meta property="og:title" content="Helix, Python, and Poetry">
+
+<meta property="og:description" content="Setting up the Helix editor and python-lsp-server for poetry projects.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JorisL blog">
+
+<meta property="article:published_time" content=" 2022-11-05T00:00:00+00:00">
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/helix-python-and-poetry.html"
+    },
+    "url": "/helix-python-and-poetry.html",
+    "headline": "Helix, Python, and Poetry",
+    "description": "Setting up the Helix editor and python-lsp-server for poetry projects.",
+    
+    
+    "publisher": {
+        "@type": "Organization",
+        "name": "JorisL blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/"
+        }
+    },
+    "datePublished": "2022-11-05T00:00:00+00:00"
+}
+</script>
+
+
+    <title>Helix, Python, and Poetry | JorisL blog</title>
+    <link rel="stylesheet" type="text/css" href="/static/pico.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/marmite.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/colorschemes/github.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/custom.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/github.min.css" id="highlightjs-theme" />
+
+
+
+        <link rel="alternate" type="application/rss+xml" title="index" href="/index.rss">
+    <link rel="alternate" type="application/rss+xml" title="Board & card game rules" href="/gamerules.rss">
+    <link rel="alternate" type="application/rss+xml" title="Reference" href="/reference.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: rules" href="/tag-rules.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: standard 52-card deck" href="/tag-standard-52-card-deck.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: solitaire" href="/tag-solitaire.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: programming" href="/tag-programming.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Julia" href="/tag-julia.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: cheat sheet" href="/tag-cheat-sheet.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: electronics" href="/tag-electronics.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: keyboard" href="/tag-keyboard.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: juggling" href="/tag-juggling.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Nim" href="/tag-nim.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Excel" href="/tag-excel.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: unicycling" href="/tag-unicycling.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: LabVIEW" href="/tag-labview.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: scam" href="/tag-scam.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: blindsolving" href="/tag-blindsolving.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: lisp" href="/tag-lisp.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: rubiks" href="/tag-rubiks.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Z3" href="/tag-z3.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: python" href="/tag-python.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: Emacs" href="/tag-emacs.rss">
+    <link rel="alternate" type="application/rss+xml" title="tag: helix" href="/tag-helix.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2025" href="/archive-2025.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2024" href="/archive-2024.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2023" href="/archive-2023.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2022" href="/archive-2022.rss">
+    <link rel="alternate" type="application/rss+xml" title="year: 2021" href="/archive-2021.rss">
+    
+
+    
+
+    
+    
+</head>
+<body>
+    
+    <main class="container">
+        
+        <header class="header-content">
+            <nav class="header-nav">
+                <ul class="header-name">
+                    <li>
+                        <hgroup class="h-card">
+                            <h2>
+                                <a href="/" class="contrast p-name u-url">
+                                    
+                                        JorisL blog
+                                    
+                                </a>
+                            </h2>
+                             <p class="p-note">My personal blog</p> 
+                        </hgroup>
+                    </li>
+                </ul>
+                <button id="menu-toggle" class="hamburger">&#9776;</button>
+
+                <ul class="header-menu" id="header-menu">
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/tags.html">Tags</a>
+                        
+                    </li>
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/archive.html">Archive</a>
+                        
+                    </li>
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/streams.html">Streams</a>
+                        
+                    </li>
+                    
+                      
+                      
+                    <li>
+                        
+                        <a class="menu-item secondary"  href="/about.html">About</a>
+                        
+                    </li>
+                    
+                    <li><span class="theme-toggle secondary" title="dark mode">&#9789;</span></li>
+                    
+                    <li><a href="#" id="search-toggle" class="secondary" title="Search (Ctrl + Shift + F)"> <span class="search-txt">Search</span><span class="search-magnifier"></span></a></li>
+                    
+                    <div class="underline"></div>
+                </ul>
+            </nav>
+            
+            <div class="marmite-background-overlay" id="overlay-close"></div>
+            <div class="marmite-search-bar hidden">
+                <span></span>
+                <button class="marmite-close-button" id="search-close">X</button>
+                <input placeholder="Search" id="marmite-search-input" />
+                <div class="marmite-search-bar-result">
+                    <ul id="marmite-search-bar-result"></ul>
+                </div>
+            </div>
+            
+        </header>
+        
+        <section class="main-content">
+            
+
+
+
+<article class="h-entry">
+  <data class="p-name" value="Helix, Python, and Poetry"></data>
+  <a class="u-url" href="/helix-python-and-poetry.html" style="display: none;"></a>
+  
+  <time class="dt-published" datetime="2022-11-05T00:00:00+00:00" style="display: none;">November 2022</time>
+  
+
+  
+
+  
+
+
+<div class="content-title" id="title">
+    <h1>Helix, Python, and Poetry</h1> 
+    
+
+
+<span class="content-date">
+    <small> November 2022 - &#10710; 6 min</small>
+</span>
+
+</div>
+
+  
+  
+  <div class="content-toc">
+    <a href="#" id="toc"></a>
+    <details>
+    <summary>🗒️</summary>
+    <ul>
+<ul>
+<li><a href="#tldr">TL;DR</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#how-to-configure-the-tools">How to configure the tools</a></li>
+<ul>
+<li><a href="#poetry-local-venv-directory">Poetry local .venv directory</a></li>
+<li><a href="#activating-the-virtual-environment">Activating the virtual environment</a></li>
+<li><a href="#installing-python-lsp-server-and-other-tools-within-the-virtual-environment">Installing python-lsp-server and other tools within the virtual environment</a></li>
+<li><a href="#setting-up-helix">Setting up Helix</a></li>
+<li><a href="#testing-the-configuration">Testing the configuration</a></li>
+</ul>
+<li><a href="#usage">Usage</a></li>
+</ul>
+</ul>
+
+    </details>
+  </div>
+  
+
+  <div class="content-html e-content"><!-- Content Injected to every content markdown header -->
+<h2><a href="#tldr" aria-hidden="true" class="anchor" id="tldr"></a>TL;DR</h2>
+<ul>
+<li>Set up poetry to store its virtual environment within the project root.</li>
+<li>Install <code>python-lsp-server</code> and <code>black</code> within the virtual environment.</li>
+<li>Open a terminal session with that virtual environment enabled
+(<code>.venv/Scripts/Activate</code>).</li>
+<li>Start the helix editor within that terminal session.</li>
+</ul>
+<h2><a href="#introduction" aria-hidden="true" class="anchor" id="introduction"></a>Introduction</h2>
+<p>At work I've been developing several small-ish software projects in Python using
+<a href="https://python-poetry.org">poetry</a> to manage the different dependencies,
+virtual environments, etc. for each of those projects. So far I've mostly been
+using Visual Studio Code to edit these projects, instead of using my old and
+trusted <a href="https://github.com/JorisL/.emacs.d">Emacs config</a>.</p>
+<p>The main reason for using VS Code was due to difficulties with Emacs to get the
+Python language server protocol correctly working for those projects. It <em>was</em>
+quite easy to install and set-up the python-lsp-server with emacs for projects
+using the main installed Python installation on my PC, but each of these
+projects had their own python virtual environment with various packages either
+not installed or with a different version of my &quot;main&quot; Python installation. This
+caused problems with the LSP server, where it would state multiple errors in my
+code due to it not being able to find the various packages and libraries used in
+those projects. With VS Code this wasn't a problem, since it was relatively easy
+to select either the main Python installation on my PC or the Python
+installation within the poetry virtual environment.</p>
+<p>In principle this setup worked for development, but I wasn't entirely happy
+using it. The editor I mostly used outside of this project was Emacs, which I
+already set up with a modal editing mode slightly based on
+<a href="https://kakoune.org">Kakoune</a>. While there <em>are</em> several extentions for VS code
+to add a modal editing mode, they where never really a joy to use. Mostly due to
+sluggishness and it still feeling like a &quot;hack&quot; on top of a non-modal editor,
+instead of it beging an integraded experience. Furthermore several
+functionalities I see as being essential to have in an editor, such as macros,
+are not available in VS Code.</p>
+<p>Lately I've been trying out the <a href="https://helix-editor.com">Helix</a> editor, and so
+far it has been a joy to use. It is a lightweight, modal, terminal text editor,
+similar to VIM. But where with VIM you practically need to install mutliple
+additional packages to make it sort-of usable for day-to-day use (LSP, FZF,
+surround, etc.), Helix already has most of these functions build-in. And since
+the editor is build with those integrations from the ground up it is quite a lot
+easier and straightforward to use. And the default keybindings are, in my
+opinion, a lot easier to remember and use as those from VIM. Most of the things
+I also did with Emacs seem to be relatively easy to do with Helix (with some
+small tweaks, such as using markdown for notes instead of org mode).</p>
+<p>So, in order to try and transfer my workflow to Helix, I've been trying to set
+it up with both
+<a href="https://github.com/python-lsp/python-lsp-server">python-lsp-server</a> and poetry,
+and it seems I've found a workable solution for my use-case.</p>
+<h2><a href="#how-to-configure-the-tools" aria-hidden="true" class="anchor" id="how-to-configure-the-tools"></a>How to configure the tools</h2>
+<h3><a href="#poetry-local-venv-directory" aria-hidden="true" class="anchor" id="poetry-local-venv-directory"></a>Poetry local .venv directory</h3>
+<p>Each poetry project always gets a seperate directory for storing it's Python
+virtual environment. Thanks to this each project can have different versions of
+Python and libraries installed without clashing with each other. By default a
+directory is made in the <code>{cache-dir}/virtualenvs</code> of your PC, but poetry can
+(and for this trick, should) also be set up to store the virtual-environment
+data from a project within a .venv folder in the project root.</p>
+<p>This is done by setting the <code>virtualenvs.in-project</code> within the
+<a href="https://python-poetry.org/docs/configuration/#virtualenvsin-project">poetry configuration</a>
+to <code>true</code>.</p>
+<h3><a href="#activating-the-virtual-environment" aria-hidden="true" class="anchor" id="activating-the-virtual-environment"></a>Activating the virtual environment</h3>
+<p>The .venv folder created within the project root contains scripts in order to
+activate the virtual environment. See
+<a href="https://docs.python.org/3/library/venv.html#how-venvs-work">this</a> section in
+the Python documentation. Within Windows this can be activated by first opening
+a powershell terminal within the project root and then running
+<code>.venv\Scripts\Activate.ps1</code>. Now, for as long as this terminal is open, the
+paths to Python and other related binaries and scripts are changed to those kept
+in the .venv directory. Note that this only counts when running commands within
+that powershell session. Opening a new powershell terminal parallel to this one,
+then running Python from that one will use the standard system Python binary.</p>
+<h3><a href="#installing-python-lsp-server-and-other-tools-within-the-virtual-environment" aria-hidden="true" class="anchor" id="installing-python-lsp-server-and-other-tools-within-the-virtual-environment"></a>Installing python-lsp-server and other tools within the virtual environment</h3>
+<p>The trick to using LSP with Helix with a poetry project is to run Helix within
+the powershell terminal after enabling the project's virtual environment. This
+way, when the Helix process calls tools like <code>python-lsp-server</code> it will use the
+Python installation as used in the poetry project. Therefore the LSP server also
+correctly scans the project files with the python packages actually used in the
+project.</p>
+<p>But for this to work we now have to install <code>python-lsp-server</code> within the
+project's virtual environment. The same counts for tools like <code>black</code>. Whilst in
+the terminal with the virtual environment this can quickly be done using
+<code>pip install python-lsp-server black</code>, but a better way would be to set up these
+packages as requirements within the project's <code>pyproject.toml</code> file.</p>
+<h3><a href="#setting-up-helix" aria-hidden="true" class="anchor" id="setting-up-helix"></a>Setting up Helix</h3>
+<p>Configure the <code>languages.toml</code> file withing the Helix configuration directory
+(<code>./config/helix/</code> or <code>%AppData%\\Roaming\\helix</code>) to use <code>pylsp</code> as the
+language server (and if wanted <code>black</code> to be the code formatter), and make sure
+to <strong>not</strong> use hard coded file paths for these. Otherwise when hard coded paths
+are used it will not use the .venv versions when needed.</p>
+<p>An example of this is shown below<sup class="footnote-ref"><a href="#fn-1" id="fnref-1" data-footnote-ref>1</a></sup><sup class="footnote-ref"><a href="#fn-2" id="fnref-2" data-footnote-ref>2</a></sup>:</p>
+<pre><code class="language-{.toml">[[language]]
+name = &quot;python&quot;
+language-server = { command = &quot;pylsp&quot; }
+formatter = { command = &quot;black&quot;, args = [&quot;--quiet&quot;, &quot;-&quot;] }
+auto-format = true
+</code></pre>
+<p>including settings to set a max. line length for both formatting and linting.</p>
+<p>settings, for example max. line lengths, since these are not read from the
+poetry's <code>pyproject.toml</code> configuration file. According to the Helix
+documentation it should be possible to include a <code>languages.toml</code> settings file
+like above within a project, such that you can have different settings LSP or
+formatter settings for different projects, but I've not tested that yet.</p>
+<h3><a href="#testing-the-configuration" aria-hidden="true" class="anchor" id="testing-the-configuration"></a>Testing the configuration</h3>
+<p>Helix has a startup option to check if the tools for a certain language are
+correctly set up: <code>hx --health &lt;language&gt;</code>. When we open a new terminal window
+and run this command with python as our language we should get something like
+this:</p>
+<pre><code>$ hx --health python
+Configured language server: pylsp
+Binary for language server: /opt/homebrew/bin/pylsp
+Configured debug adapter: None
+Highlight queries: ✓
+Textobject queries: ✓
+Indent queries: ✘
+</code></pre>
+<p>In this case the found language server binary is the one from our system Python
+installation. But when this same command is executed from a terminal with the
+virtual environment enabled we should see this path change to something like
+<code>.venv/Scripts/pylsp</code>.</p>
+<h2><a href="#usage" aria-hidden="true" class="anchor" id="usage"></a>Usage</h2>
+<p>Now, when we want to edit files from the given poetry project we need to start a
+terminal in the root folder of the poetry project, and then enable the virtual
+environment. If we then run <code>hx</code> within that terminal<sup class="footnote-ref"><a href="#fn-3" id="fnref-3" data-footnote-ref>3</a></sup> it will use the
+project's pylsp server instead of the system's pylsp server.</p>
+<p>directory of Helix is now the project's working directory. Now commands like
+<code>&lt;space&gt; f</code> will only search for files within the project.</p>
+<p>To make things a bit easier we can make a script or terminal configuration to
+open a terminal in the project's directory and automatically enable the virtual
+environment. Within, for example, Windows Terminal, this can be done by creating
+a new powershell configuration with the project's root as startup path and the
+followin line as startup command:</p>
+<pre><code>powershell -noexit .venv/Scripts/Activate.ps1
+</code></pre>
+<p>Now you can just start this configuration, run <code>hx</code>, and start editing. And a
+2nd terminal with this configuration can be opened to run and debug the python
+code.</p>
+<!-- Content Injected to every content markdown footer -->
+<section class="footnotes" data-footnotes>
+<ol>
+<li id="fn-1">
+<p>see <a href="https://github.com/JorisL/helix">https://github.com/JorisL/helix</a> for my latest configuration, <a href="#fnref-1" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>
+</li>
+<li id="fn-2">
+<p>This is where we also must configure some LSP and formatter related <a href="#fnref-2" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="2" aria-label="Back to reference 2">↩</a></p>
+</li>
+<li id="fn-3">
+<p>An added benefit of running hx within this terminal is that the working <a href="#fnref-3" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="3" aria-label="Back to reference 3">↩</a></p>
+</li>
+</ol>
+</section>
+</div>
+  
+  <footer class="data-tags-footer">
+
+    <div class="content-authors-flex">
+      <div class="content-authors-full">
+        
+
+      </div>
+
+      <div class="date-tags-container">
+        <div class="content-date">
+          
+
+
+<span class="content-date">
+    <small> November 2022 - &#10710; 6 min</small>
+</span>
+
+          
+        </div>
+
+        <ul class="content-tags">
+          
+          
+          
+          <li><a href="/tag-programming.html" class="p-category">programming</a></li>
+          
+          
+          
+          <li><a href="/tag-python.html" class="p-category">python</a></li>
+          
+          
+          
+          <li><a href="/tag-helix.html" class="p-category">helix</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </footer>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+        </section>
+        
+        <footer class="footer-content grid">
+            
+            
+        </footer>
+        
+    </main>
+
+    <script src="/static/marmite.js"></script>
+    <script src="/static/custom.js"></script>
+    
+    <script type="module" src="/static/search.js"></script>
+    
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+<script>
+  hljs.highlightAll();
+</script>
+
+
+
+</body>
+</html>

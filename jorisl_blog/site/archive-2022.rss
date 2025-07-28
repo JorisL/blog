@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>JorisL blog</title><link>http://</link><description>My personal blog</description><pubDate>Sat, 05 Nov 2022 00:00:00 GMT</pubDate><lastBuildDate>Mon, 28 Jul 2025 12:10:42 GMT</lastBuildDate><generator>marmite</generator><item><title>Helix, Python, and Poetry</title><link>http:///helix-python-and-poetry.html</link><description><![CDATA["Setting up the Helix editor and python-lsp-server for poetry projects."]]></description><category>programming</category><category>python</category><category>helix</category><guid>http:///helix-python-and-poetry.html</guid><pubDate>Sat, 05 Nov 2022 00:00:00 GMT</pubDate><source url="http://">archive-2022</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<h2><a href="#tldr" aria-hidden="true" class="anchor" id="tldr"></a>TL;DR</h2>
+<ul>
+<li>Set up poetry to store its virtual environment within the project root.</li>
+<li>Install <code>python-lsp-server</code> and <code>black</code> within the virtual environment.</li>
+<li>Open a terminal session with that virtual environment enabled
+(<code>.venv/Scripts/Activate</code>).</li>
+<li>Start the helix editor within that terminal session.</li>
+</ul>
+<h2><a href="#introduction" aria-hidden="true" class="anchor" id="introduction"></a>Introduction</h2>
+<p>At work I've been developing several small-ish software projects in Python using
+<a href="https://python-poetry.org">poetry</a> to manage the different dependencies,
+virtual environments, etc. for each of those projects. So far I've mostly been
+using Visual Studio Code to edit these projects, instead of using my old and
+trusted <a href="https://github.com/JorisL/.emacs.d">Emacs config</a>.</p>
+<p>The main reason for using VS Code was due to difficulties with Emacs to get the
+Python language server protocol correctly working for those projects. It <em>was</em>
+quite easy to install and set-up the python-lsp-server with emacs for projects
+using the main installed Python installation on my PC, but each of these
+projects had their own python virtual environment with various packages either
+not installed or with a different version of my &quot;main&quot; Python installation. This
+caused problems with the LSP server, where it would state multiple errors in my
+code due to it not being able to find the various packages and libraries used in
+those projects. With VS Code this wasn't a problem, since it was relatively easy
+to select either the main Python installation on my PC or the Python
+installation within the poetry virtual environment.</p>
+<p>In principle this setup worked for development, but I wasn't entirely happy
+using it. The editor I mostly used outside of this project was Emacs, which I
+already set up with a modal editing mode slightly based on
+<a href="https://kakoune.org">Kakoune</a>. While there <em>are</em> several extentions for VS code
+to add a modal editing mode, they where never really a joy to use. Mostly due to
+sluggishness and it still feeling like a &quot;hack&quot; on top of a non-modal editor,
+instead of it beging an integraded experience. Furthermore several
+functionalities I see as being essential to have in an editor, such as macros,
+are not available in VS Code.</p>
+<p>Lately I've been trying out the <a href="https://helix-editor.com">Helix</a> editor, and so
+far it has been a joy to use. It is a lightweight, modal, terminal text editor,
+similar to VIM. But where with VIM you practically need to install mutliple
+additional packages to make it sort-of usable for day-to-day use (LSP, FZF,
+surround, etc.), Helix already has most of these functions build-in. And since
+the editor is build with those integrations from the ground up it is quite a lot
+easier and straightforward to use. And the default keybindings are, in my
+opinion, a lot easier to remember and use as those from VIM. Most of the things
+I also did with Emacs seem to be relatively easy to do with Helix (with some
+small tweaks, such as using markdown for notes instead of org mode).</p>
+<p>So, in order to try and transfer my workflow to Helix, I've been trying to set
+it up with both
+<a href="https://github.com/python-lsp/python-lsp-server">python-lsp-server</a> and poetry,
+and it seems I've found a workable solution for my use-case.</p>
+<h2><a href="#how-to-configure-the-tools" aria-hidden="true" class="anchor" id="how-to-configure-the-tools"></a>How to configure the tools</h2>
+<h3><a href="#poetry-local-venv-directory" aria-hidden="true" class="anchor" id="poetry-local-venv-directory"></a>Poetry local .venv directory</h3>
+<p>Each poetry project always gets a seperate directory for storing it's Python
+virtual environment. Thanks to this each project can have different versions of
+Python and libraries installed without clashing with each other. By default a
+directory is made in the <code>{cache-dir}/virtualenvs</code> of your PC, but poetry can
+(and for this trick, should) also be set up to store the virtual-environment
+data from a project within a .venv folder in the project root.</p>
+<p>This is done by setting the <code>virtualenvs.in-project</code> within the
+<a href="https://python-poetry.org/docs/configuration/#virtualenvsin-project">poetry configuration</a>
+to <code>true</code>.</p>
+<h3><a href="#activating-the-virtual-environment" aria-hidden="true" class="anchor" id="activating-the-virtual-environment"></a>Activating the virtual environment</h3>
+<p>The .venv folder created within the project root contains scripts in order to
+activate the virtual environment. See
+<a href="https://docs.python.org/3/library/venv.html#how-venvs-work">this</a> section in
+the Python documentation. Within Windows this can be activated by first opening
+a powershell terminal within the project root and then running
+<code>.venv\Scripts\Activate.ps1</code>. Now, for as long as this terminal is open, the
+paths to Python and other related binaries and scripts are changed to those kept
+in the .venv directory. Note that this only counts when running commands within
+that powershell session. Opening a new powershell terminal parallel to this one,
+then running Python from that one will use the standard system Python binary.</p>
+<h3><a href="#installing-python-lsp-server-and-other-tools-within-the-virtual-environment" aria-hidden="true" class="anchor" id="installing-python-lsp-server-and-other-tools-within-the-virtual-environment"></a>Installing python-lsp-server and other tools within the virtual environment</h3>
+<p>The trick to using LSP with Helix with a poetry project is to run Helix within
+the powershell terminal after enabling the project's virtual environment. This
+way, when the Helix process calls tools like <code>python-lsp-server</code> it will use the
+Python installation as used in the poetry project. Therefore the LSP server also
+correctly scans the project files with the python packages actually used in the
+project.</p>
+<p>But for this to work we now have to install <code>python-lsp-server</code> within the
+project's virtual environment. The same counts for tools like <code>black</code>. Whilst in
+the terminal with the virtual environment this can quickly be done using
+<code>pip install python-lsp-server black</code>, but a better way would be to set up these
+packages as requirements within the project's <code>pyproject.toml</code> file.</p>
+<h3><a href="#setting-up-helix" aria-hidden="true" class="anchor" id="setting-up-helix"></a>Setting up Helix</h3>
+<p>Configure the <code>languages.toml</code> file withing the Helix configuration directory
+(<code>./config/helix/</code> or <code>%AppData%\\Roaming\\helix</code>) to use <code>pylsp</code> as the
+language server (and if wanted <code>black</code> to be the code formatter), and make sure
+to <strong>not</strong> use hard coded file paths for these. Otherwise when hard coded paths
+are used it will not use the .venv versions when needed.</p>
+<p>An example of this is shown below<sup class="footnote-ref"><a href="#fn-1" id="fnref-1" data-footnote-ref>1</a></sup><sup class="footnote-ref"><a href="#fn-2" id="fnref-2" data-footnote-ref>2</a></sup>:</p>
+<pre><code class="language-{.toml">[[language]]
+name = &quot;python&quot;
+language-server = { command = &quot;pylsp&quot; }
+formatter = { command = &quot;black&quot;, args = [&quot;--quiet&quot;, &quot;-&quot;] }
+auto-format = true
+</code></pre>
+<p>including settings to set a max. line length for both formatting and linting.</p>
+<p>settings, for example max. line lengths, since these are not read from the
+poetry's <code>pyproject.toml</code> configuration file. According to the Helix
+documentation it should be possible to include a <code>languages.toml</code> settings file
+like above within a project, such that you can have different settings LSP or
+formatter settings for different projects, but I've not tested that yet.</p>
+<h3><a href="#testing-the-configuration" aria-hidden="true" class="anchor" id="testing-the-configuration"></a>Testing the configuration</h3>
+<p>Helix has a startup option to check if the tools for a certain language are
+correctly set up: <code>hx --health &lt;language&gt;</code>. When we open a new terminal window
+and run this command with python as our language we should get something like
+this:</p>
+<pre><code>$ hx --health python
+Configured language server: pylsp
+Binary for language server: /opt/homebrew/bin/pylsp
+Configured debug adapter: None
+Highlight queries: ✓
+Textobject queries: ✓
+Indent queries: ✘
+</code></pre>
+<p>In this case the found language server binary is the one from our system Python
+installation. But when this same command is executed from a terminal with the
+virtual environment enabled we should see this path change to something like
+<code>.venv/Scripts/pylsp</code>.</p>
+<h2><a href="#usage" aria-hidden="true" class="anchor" id="usage"></a>Usage</h2>
+<p>Now, when we want to edit files from the given poetry project we need to start a
+terminal in the root folder of the poetry project, and then enable the virtual
+environment. If we then run <code>hx</code> within that terminal<sup class="footnote-ref"><a href="#fn-3" id="fnref-3" data-footnote-ref>3</a></sup> it will use the
+project's pylsp server instead of the system's pylsp server.</p>
+<p>directory of Helix is now the project's working directory. Now commands like
+<code>&lt;space&gt; f</code> will only search for files within the project.</p>
+<p>To make things a bit easier we can make a script or terminal configuration to
+open a terminal in the project's directory and automatically enable the virtual
+environment. Within, for example, Windows Terminal, this can be done by creating
+a new powershell configuration with the project's root as startup path and the
+followin line as startup command:</p>
+<pre><code>powershell -noexit .venv/Scripts/Activate.ps1
+</code></pre>
+<p>Now you can just start this configuration, run <code>hx</code>, and start editing. And a
+2nd terminal with this configuration can be opened to run and debug the python
+code.</p>
+<!-- Content Injected to every content markdown footer -->
+<section class="footnotes" data-footnotes>
+<ol>
+<li id="fn-1">
+<p>see <a href="https://github.com/JorisL/helix">https://github.com/JorisL/helix</a> for my latest configuration, <a href="#fnref-1" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>
+</li>
+<li id="fn-2">
+<p>This is where we also must configure some LSP and formatter related <a href="#fnref-2" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="2" aria-label="Back to reference 2">↩</a></p>
+</li>
+<li id="fn-3">
+<p>An added benefit of running hx within this terminal is that the working <a href="#fnref-3" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="3" aria-label="Back to reference 3">↩</a></p>
+</li>
+</ol>
+</section>
+]]></content:encoded></item><item><title>Removing password from protected Excel cells</title><link>http:///removing-password-from-protected-excel-cells.html</link><description><![CDATA["How to remove password protection from protected Excel cells using Emacs."]]></description><category>Emacs</category><category>Excel</category><guid>http:///removing-password-from-protected-excel-cells.html</guid><pubDate>Wed, 01 Jun 2022 00:00:00 GMT</pubDate><source url="http://">archive-2022</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<h2><a href="#introduction" aria-hidden="true" class="anchor" id="introduction"></a>Introduction</h2>
+<p>A while ago I received an Excel file where many of the formulas and calculations
+where locked and made invisible using <a href="https://support.microsoft.com/en-au/office/require-a-password-to-open-or-modify-a-workbook-10579f0e-b2d9-4c05-b9f8-4109a6bce643">password protected sheets</a>.
+The password was lost, making it &quot;impossible&quot; to view the formulas making up the
+Excel file; only the resulting values. With this password-protected
+functionality it is still possible to open the file without password. Also; the
+values in protected cells are still updated when modifying one of the
+unprotected cells its formula references to. Therefore the formulas behind the
+cells should also still be unencrypted by a password.</p>
+<p>A quick search on the internet at the time (stackoverflow, superuser, etc.) did
+not get me an answer for how I could recover the file. But with a bit of
+poking-around in the .xlsx file by myself I was able to disable this protection.</p>
+<p>This post describes how I was able to find and disable this protection. As an
+example for this post, I've prepared <a href="media/excel_password/locked_example.xlsx">this sheet protected Excel file</a>.
+This excel file has a single formula in cell A1, but the sheet protection has
+been set up such that you need to provide the correct password in order to
+change, or even see the formula behind, the cell.</p>
+<p><figure><img src="media/excel_password/locked.png" alt="Password protected Excel file, where only the value from cell A1 is visible, but not the underlying formula." /></figure></p>
+<h2><a href="#exploring-excel-files" aria-hidden="true" class="anchor" id="exploring-excel-files"></a>Exploring Excel files</h2>
+<p>After not finding a simple answer for disabling this password protection I went
+looking around in the .xlsx file myself. One of the things I remembered having
+read somewhere in the past was that .xlsx files are actually just .zip archives.
+Therefore, we can just rename the file extention of our .xlsx file to .zip,
+excract the archive, and explore its contents.</p>
+<p>For our example file this archive mostly consists of .xml files, describing
+various parts and properties in the workbook, but for larger Excel files it
+could also contain various images, videos, and other embedded files. Since this
+simple example file practically only consists of .xml files it is likely that
+the info we're looking for is in one of those files. Normally I would edit these
+in Emacs, and with that program we already have a trick up our sleeve. Emacs has
+a
+<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/File-Archives.html">build-in mode</a>
+to edit text files within archives, without the need to unarchive the file
+yourself. This can be used to edit text files in regular .zip or .tar archives,
+but also in files like Java .jar and Excel .xlsx files which are actually
+archives with a different file extention.</p>
+<p>So; let's open our example .xlsx file in Emacs:</p>
+<pre><code>M Filemode      Length  Date         Time      File
+- ----------  --------  -----------  --------  ---------------------------------------
+  -rw-rw-rw-      1276   1-Jan-1980  00:00:00  [Content_Types].xml
+  -rw-rw-rw-       588   1-Jan-1980  00:00:00  _rels/.rels
+  -rw-rw-rw-      2212   1-Jan-1980  00:00:00  xl/workbook.xml
+  -rw-rw-rw-       690   1-Jan-1980  00:00:00  xl/_rels/workbook.xml.rels
+  -rw-rw-rw-      1480   1-Jan-1980  00:00:00  xl/worksheets/sheet1.xml
+  -rw-rw-rw-      8390   1-Jan-1980  00:00:00  xl/theme/theme1.xml
+  -rw-rw-rw-      2313   1-Jan-1980  00:00:00  xl/styles.xml
+  -rw-rw-rw-       322   1-Jan-1980  00:00:00  xl/worksheets/_rels/sheet1.xml.rels
+  -rw-rw-rw-      5420   1-Jan-1980  00:00:00  xl/printerSettings/printerSettings1.bin
+  -rw-rw-rw-       169   1-Jan-1980  00:00:00  xl/calcChain.xml
+  -rw-rw-rw-       625   1-Jan-1980  00:00:00  docProps/core.xml
+  -rw-rw-rw-       785   1-Jan-1980  00:00:00  docProps/app.xml
+- ----------  --------  -----------  --------  ---------------------------------------
+                 24270                         12 files
+</code></pre>
+<p>When opening an .xlsx file in Emacs, it is automatically opened as an explorable
+.zip file. Here we see the different .xml files representing different parts of
+the Excel file. In this case the example file only has one worksheet, in
+<code>xl/worksheets/sheet1.xml</code>. Lets open it to see the information stored for this
+sheet:</p>
+<pre><code class="language-{.xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;worksheet xmlns=&quot;http://schemas.openxmlformats.org/spreadsheetml/2006/main&quot; xmlns:r=&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot; xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; mc:Ignorable=&quot;x14ac xr xr2 xr3&quot; xmlns:x14ac=&quot;http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac&quot; xmlns:xr=&quot;http://schemas.microsoft.com/office/spreadsheetml/2014/revision&quot; xmlns:xr2=&quot;http://schemas.microsoft.com/office/spreadsheetml/2015/revision2&quot; xmlns:xr3=&quot;http://schemas.microsoft.com/office/spreadsheetml/2016/revision3&quot; xr:uid=&quot;{2838881A-D7EE-4880-9A40-583A7BEB231B}&quot;&gt;&lt;dimension ref=&quot;A1&quot;/&gt;&lt;sheetViews&gt;&lt;sheetView tabSelected=&quot;1&quot; workbookViewId=&quot;0&quot;/&gt;&lt;/sheetViews&gt;&lt;sheetFormatPr defaultRowHeight=&quot;15&quot; x14ac:dyDescent=&quot;0.25&quot;/&gt;&lt;sheetData&gt;&lt;row r=&quot;1&quot; spans=&quot;1:1&quot; x14ac:dyDescent=&quot;0.25&quot;&gt;&lt;c r=&quot;A1&quot; s=&quot;1&quot;&gt;&lt;f&gt;6*7&lt;/f&gt;&lt;v&gt;42&lt;/v&gt;&lt;/c&gt;&lt;/row&gt;&lt;/sheetData&gt;&lt;sheetProtection algorithmName=&quot;SHA-512&quot; hashValue=&quot;1vd8mFJrCEQ1cOfXy5dZkfZ3vsb5A+FmVy7S3xvY9MDhrCvfPKDgUJtrPL1XTEvoPLaZyeQL21LWeq8fSilt4g==&quot; saltValue=&quot;v5HhQTb+4xMaHY6/lDVUeQ==&quot; spinCount=&quot;100000&quot; sheet=&quot;1&quot; formatCells=&quot;0&quot; formatColumns=&quot;0&quot; formatRows=&quot;0&quot; insertColumns=&quot;0&quot; insertRows=&quot;0&quot; insertHyperlinks=&quot;0&quot; deleteColumns=&quot;0&quot; deleteRows=&quot;0&quot; sort=&quot;0&quot; autoFilter=&quot;0&quot; pivotTables=&quot;0&quot;/&gt;&lt;pageMargins left=&quot;0.7&quot; right=&quot;0.7&quot; top=&quot;0.75&quot; bottom=&quot;0.75&quot; header=&quot;0.3&quot; footer=&quot;0.3&quot;/&gt;&lt;pageSetup paperSize=&quot;9&quot; orientation=&quot;portrait&quot; r:id=&quot;rId1&quot;/&gt;&lt;/worksheet&gt;
+</code></pre>
+<p>Let's first fix the formatting for readability:</p>
+<pre><code class="language-{.xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;worksheet
+    xmlns=&quot;http://schemas.openxmlformats.org/spreadsheetml/2006/main&quot;
+    xmlns:r=&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;
+    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; mc:Ignorable=&quot;x14ac xr xr2 xr3&quot;
+    xmlns:x14ac=&quot;http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac&quot;
+    xmlns:xr=&quot;http://schemas.microsoft.com/office/spreadsheetml/2014/revision&quot;
+    xmlns:xr2=&quot;http://schemas.microsoft.com/office/spreadsheetml/2015/revision2&quot;
+    xmlns:xr3=&quot;http://schemas.microsoft.com/office/spreadsheetml/2016/revision3&quot; xr:uid=&quot;{2838881A-D7EE-4880-9A40-583A7BEB231B}&quot;&gt;
+    &lt;dimension ref=&quot;A1&quot;/&gt;
+    &lt;sheetViews&gt;
+        &lt;sheetView tabSelected=&quot;1&quot; workbookViewId=&quot;0&quot;/&gt;
+    &lt;/sheetViews&gt;
+    &lt;sheetFormatPr defaultRowHeight=&quot;15&quot; x14ac:dyDescent=&quot;0.25&quot;/&gt;
+    &lt;sheetData&gt;
+        &lt;row r=&quot;1&quot; spans=&quot;1:1&quot; x14ac:dyDescent=&quot;0.25&quot;&gt;
+            &lt;c r=&quot;A1&quot; s=&quot;1&quot;&gt;
+                &lt;f&gt;6*7&lt;/f&gt;
+                &lt;v&gt;42&lt;/v&gt;
+            &lt;/c&gt;
+        &lt;/row&gt;
+    &lt;/sheetData&gt;
+    &lt;sheetProtection algorithmName=&quot;SHA-512&quot; hashValue=&quot;1vd8mFJrCEQ1cOfXy5dZkfZ3vsb5A+FmVy7S3xvY9MDhrCvfPKDgUJtrPL1XTEvoPLaZyeQL21LWeq8fSilt4g==&quot; saltValue=&quot;v5HhQTb+4xMaHY6/lDVUeQ==&quot; spinCount=&quot;100000&quot; sheet=&quot;1&quot; formatCells=&quot;0&quot; formatColumns=&quot;0&quot; formatRows=&quot;0&quot; insertColumns=&quot;0&quot; insertRows=&quot;0&quot; insertHyperlinks=&quot;0&quot; deleteColumns=&quot;0&quot; deleteRows=&quot;0&quot; sort=&quot;0&quot; autoFilter=&quot;0&quot; pivotTables=&quot;0&quot;/&gt;
+    &lt;pageMargins left=&quot;0.7&quot; right=&quot;0.7&quot; top=&quot;0.75&quot; bottom=&quot;0.75&quot; header=&quot;0.3&quot; footer=&quot;0.3&quot;/&gt;
+    &lt;pageSetup paperSize=&quot;9&quot; orientation=&quot;portrait&quot; r:id=&quot;rId1&quot;/&gt;
+&lt;/worksheet&gt;
+</code></pre>
+<p>We can see that, as expected, all the information from cell A1 is still in the
+worksheet:</p>
+<pre><code class="language-{.xml}">&lt;c r=&quot;A1&quot; s=&quot;1&quot;&gt;
+    &lt;f&gt;6*7&lt;/f&gt;
+    &lt;v&gt;42&lt;/v&gt;
+&lt;/c&gt;
+</code></pre>
+<p>But more importantly, we can also find the following XML tag:</p>
+<pre><code class="language-{.xml}">&lt;sheetProtection algorithmName=&quot;SHA-512&quot; hashValue=&quot;1vd8mFJrCEQ1cOfXy5dZkfZ3vsb5A+FmVy7S3xvY9MDhrCvfPKDgUJtrPL1XTEvoPLaZyeQL21LWeq8fSilt4g==&quot; saltValue=&quot;v5HhQTb+4xMaHY6/lDVUeQ==&quot; spinCount=&quot;100000&quot; sheet=&quot;1&quot; formatCells=&quot;0&quot; formatColumns=&quot;0&quot; formatRows=&quot;0&quot; insertColumns=&quot;0&quot; insertRows=&quot;0&quot; insertHyperlinks=&quot;0&quot; deleteColumns=&quot;0&quot; deleteRows=&quot;0&quot; sort=&quot;0&quot; autoFilter=&quot;0&quot; pivotTables=&quot;0&quot;/&gt;
+</code></pre>
+<p>So, what if we remove the entire <code>SheetProtection</code> tag from the xml file?</p>
+<p><figure><img src="media/excel_password/unlocked.png" alt="The excel sheet is unprotected, and we can see and modify the formula of cell A1." /></figure></p>
+<h2><a href="#automating-the-password-removal-process" aria-hidden="true" class="anchor" id="automating-the-password-removal-process"></a>Automating the password removal process</h2>
+<p>We already found one of the advantages of using a text editor like Emacs. In
+this case we where able to edit a text file within an archived file without
+unzipping and re-zipping the file. Otherwise (in Windows), we would need to:</p>
+<ol>
+<li>change the file format from .xlsx file to .zip</li>
+<li>unzip the file</li>
+<li>modify the .xml file</li>
+<li>zip the entire directory</li>
+<li>change the resulting archives file format from .zip file to .xlsx</li>
+</ol>
+<p>And these last parts can already lead to issues. The standard zip archiving
+settings from Windows differ from the default archiving settings from an .xlsx
+file, and using these causes the resulting .xlsx file to be invalid.</p>
+<p>One of the other major advantages with Emacs is that, practically everything the
+user can do, can be automated in elisp. For example: we can call <code>C-h k &lt;enter&gt;</code>
+in the .xlsx buffer in Emacs to find the function called when trying to open the
+corresponding .xml file on that line:</p>
+<pre><code>RET (translated from &lt;return&gt;) runs the command archive-extract (found in archive-mode-map), which is an interactive
+compiled Lisp function in ‘arc-mode.el’.
+
+It is bound to RET, e..f, &lt;mouse-2&gt;, &lt;menu-bar&gt; &lt;immediate&gt; &lt;find-file&gt;.
+
+(archive-extract &amp;optional OTHER-WINDOW-P EVENT)
+
+In archive mode, extract this entry of the archive into its own buffer.
+
+[back]
+</code></pre>
+<p>Using this info we can write a script to perform exactly the same actions in
+Emacs as would be done manually. But emacs-lisp is also a full-fledged
+programming language, so we can extend the 'macro' with loops, if/else cases,
+etc..</p>
+<p>The result of this work is the following interactive emacs-lisp function:</p>
+<pre><code class="language-{.commonlisp">(defun excel-remove-sheet-protection ()
+  &quot;Remove sheet protection from an Excel xlsx file.&quot;
+  (interactive)
+  (find-file (read-file-name &quot;Enter xlsx file path/name: &quot;))  ;open excel file as zip-folder
+  (beginning-of-buffer)
+  (while (condition-case nil              ;try to do this for all sheets
+             (search-forward-regexp &quot;xl/worksheets/sheet.*?\.xml&quot;)
+           (error nil))                    ;try to move cursor to next sheet.xml
+    (let ((current_xml_point (point)))    ;store the current sheet
+      ;; open the sheet and remove the &quot;sheetprotection&quot; xml tag
+      (archive-extract)
+      (beginning-of-buffer)
+      (while (re-search-forward &quot;&lt;sheetprotection.*?&gt;&quot; nil t)
+        (replace-match &quot;&quot;))
+      (save-buffer)
+      (kill-buffer)
+      (goto-char current_xml_point))))     ;put cursor at last sheet
+</code></pre>
+<p>When calling this function (by <code>M-x excel-remove-sheet-protection</code>), Emacs first
+asks the user for a path to the .xlsx file. Emacs will then open this file, and
+for each sheet in the Excel file it will open the corresponding .xml file and
+remove the sheetprotection tag.</p>
+<p>The result after calling this function is that, after a few seconds of runtime,
+all the password sheet protections are removed from the Excel file.</p>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>Generating juggling siteswaps</title><link>http:///generating-juggling-siteswaps.html</link><description><![CDATA["Generating juggling patterns in Julia using graph theory."]]></description><category>programming</category><category>Julia</category><category>juggling</category><guid>http:///generating-juggling-siteswaps.html</guid><pubDate>Tue, 01 Mar 2022 00:00:00 GMT</pubDate><source url="http://">archive-2022</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p><a href="https://blog.jorisl.nl/media/siteswaps_julia/siteswaps_julia.html">Link to Jupyter notebook</a></p>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>Automatic differentiation &amp; dual numbers</title><link>http:///automatic-differentiation-dual-numbers.html</link><description><![CDATA["Implementing automatic differentiation in Julia using dual numbers."]]></description><category>programming</category><category>Julia</category><guid>http:///automatic-differentiation-dual-numbers.html</guid><pubDate>Tue, 01 Mar 2022 00:00:00 GMT</pubDate><source url="http://">archive-2022</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p><a href="https://blog.jorisl.nl/media/autodiff/autodiff.html">Link to Jupyter notebook</a></p>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item></channel></rss>

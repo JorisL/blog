@@ -1,0 +1,79 @@
+{
+  "marmite_version": "0.2.6",
+  "posts": 24,
+  "pages": 2,
+  "generated_at": "2025-07-28 14:10:42.884894 +02:00",
+  "timestamp": 1753704642,
+  "elapsed_time": 0.066770625,
+  "config": {
+    "name": "JorisL blog",
+    "tagline": "My personal blog",
+    "url": "",
+    "https": null,
+    "footer": "",
+    "language": "",
+    "pagination": 10,
+    "pages_title": "Pages",
+    "tags_title": "Tags",
+    "tags_content_title": "Posts tagged with '$tag'",
+    "archives_title": "Archive",
+    "archives_content_title": "Posts from '$year'",
+    "streams_title": "Streams",
+    "streams_content_title": "Posts from '$stream'",
+    "series_title": "Series",
+    "series_content_title": "Posts from '$series' series",
+    "default_author": "",
+    "authors_title": "Authors",
+    "enable_search": true,
+    "enable_related_content": false,
+    "search_title": "",
+    "content_path": "content",
+    "site_path": "",
+    "templates_path": "templates",
+    "static_path": "static",
+    "media_path": "media",
+    "card_image": "",
+    "banner_image": "",
+    "logo_image": "",
+    "default_date_format": "%B %Y",
+    "menu": [
+      [
+        "Tags",
+        "tags.html"
+      ],
+      [
+        "Archive",
+        "archive.html"
+      ],
+      [
+        "Streams",
+        "streams.html"
+      ],
+      [
+        "About",
+        "about.html"
+      ]
+    ],
+    "extra": {
+      "colorscheme": "github"
+    },
+    "authors": {},
+    "streams": {
+      "gamerules": {
+        "display_name": "Board & card game rules"
+      },
+      "reference": {
+        "display_name": "Reference"
+      }
+    },
+    "series": {},
+    "toc": true,
+    "json_feed": false,
+    "show_next_prev_links": false,
+    "publish_md": false,
+    "source_repository": null,
+    "image_provider": null,
+    "markdown_parser": null,
+    "theme": null
+  }
+}

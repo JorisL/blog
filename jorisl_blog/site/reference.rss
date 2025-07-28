@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>JorisL blog</title><link>http://</link><description>My personal blog</description><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><lastBuildDate>Mon, 28 Jul 2025 12:10:42 GMT</lastBuildDate><generator>marmite</generator><item><title>Blindsolving cheat sheet</title><link>http:///reference-blindsolving-cheat-sheet.html</link><description><![CDATA["Cheat sheet for 3x3 and 4x4 blindsolving."]]></description><category>cheat sheet</category><category>blindsolving</category><category>rubiks</category><guid>http:///reference-blindsolving-cheat-sheet.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">reference</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p><a href="media/blindsolving_cheat_sheet/blindsolving_cheat_sheet.pdf">Link to PDF cheat sheet</a></p>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>Jellybean parts &amp; useful components</title><link>http:///reference-jellybean-parts-useful-components.html</link><description><![CDATA["Reference for common and useful parts for use in electronics design."]]></description><category>electronics</category><guid>http:///reference-jellybean-parts-useful-components.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">reference</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p>This is my personal reference for jellybean parts and other usefull electronic components.
+This list is mostly focussed on hand-solderable surface mount components.</p>
+<p>Sources:</p>
+<ul>
+<li>Art of Electronics, Third Edition</li>
+<li><a href="https://www.youtube.com/watch?v=uq1DMWtjL2U&amp;list=PLvOlSehNtuHtdQF-m5UFZ5GEjABadI3kI">EEVBlog</a></li>
+<li><a href="https://theknowledgeaccelerator.com/2016/04/16/jellybean-components/">The Knowledge Accelerator</a></li>
+<li>...</li>
+</ul>
+<p><em>This post was last edited 2025-07-28.</em></p>
+<h2><a href="#resistors" aria-hidden="true" class="anchor" id="resistors"></a>Resistors</h2>
+<h3><a href="#fixed-value" aria-hidden="true" class="anchor" id="fixed-value"></a>Fixed value</h3>
+<p>Any resistor in <a href="https://en.wikipedia.org/wiki/E_series_of_preferred_numbers">E24, E48, E96, or E192 series</a> (lower preferred).</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Voltage</th>
+<th>Power</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0402</td>
+<td>50V</td>
+<td>63mW</td>
+</tr>
+<tr>
+<td>0603</td>
+<td>75V</td>
+<td>100mW</td>
+</tr>
+<tr>
+<td>0805</td>
+<td>150V</td>
+<td>125mW</td>
+</tr>
+<tr>
+<td>1206</td>
+<td>200V</td>
+<td>250mW</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="#variable" aria-hidden="true" class="anchor" id="variable"></a>Variable</h3>
+<ul>
+<li><a href="https://www.bourns.com/pdfs/3386.pdf">Bourns 3386 9mm square single turn, 0.5 W</a></li>
+<li><a href="https://www.bourns.com/pdfs/3296.pdf">Bourns 3296 9mm square multi turn, 0.5 W</a></li>
+</ul>
+<h2><a href="#diodes" aria-hidden="true" class="anchor" id="diodes"></a>Diodes</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Part #</strong></th>
+<th>Type</th>
+<th>Current rating</th>
+<th>Max voltage</th>
+<th>Voltage drop</th>
+<th>Leakage current</th>
+<th>Capacitance</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RS1M</strong></td>
+<td>Silicon</td>
+<td>1A</td>
+<td>1000V</td>
+<td>1.3V @ 1A</td>
+<td>5µA @ 1000V</td>
+<td>15pF</td>
+<td>SMA</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>1N4148W</strong></td>
+<td>Silicon</td>
+<td>150mA</td>
+<td>75V</td>
+<td>1V @ 10mA</td>
+<td>5nA @ 20V</td>
+<td>4pF</td>
+<td>SOD123</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>BAT54</strong> (A,C,S suffixes)</td>
+<td>Schottky</td>
+<td>200mA</td>
+<td>30V</td>
+<td>800mV @ 100mA</td>
+<td>2µA @ 25V</td>
+<td>10pF</td>
+<td>SOT23</td>
+<td>variants for 2 diodes in 1 package</td>
+</tr>
+<tr>
+<td><strong>1N5819HW</strong></td>
+<td>Schottky</td>
+<td>1A</td>
+<td>40V</td>
+<td>400mV @ 1A</td>
+<td>10µA @ 32V</td>
+<td>150pF</td>
+<td>SOD123</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SS54</strong></td>
+<td>Schottky</td>
+<td>5A</td>
+<td>40V</td>
+<td>550mV @ 5A</td>
+<td>1mA @ 40V</td>
+<td>500pF</td>
+<td>SMC</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2><a href="#mosfets" aria-hidden="true" class="anchor" id="mosfets"></a>MOSFETs</h2>
+<h3><a href="#nmos" aria-hidden="true" class="anchor" id="nmos"></a>nMOS</h3>
+<table>
+<thead>
+<tr>
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Resistance</th>
+<th>Threshold voltage</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2N7002</strong></td>
+<td>60V</td>
+<td>100mA</td>
+<td>2.5Ω</td>
+<td>1V ... 2.5V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>BSS138</strong></td>
+<td>50V</td>
+<td>250mA</td>
+<td>1Ω</td>
+<td>0.8V ... 1.5V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>BSS123</strong></td>
+<td>100V</td>
+<td>170mA</td>
+<td>1.3Ω</td>
+<td>0.8V ... 2V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>FDN337N</strong></td>
+<td>30V</td>
+<td>1.3A</td>
+<td>70mΩ</td>
+<td>0.4 ... 1V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a href="#pmos" aria-hidden="true" class="anchor" id="pmos"></a>pMOS</h3>
+<table>
+<thead>
+<tr>
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Resistance</th>
+<th>Threshold voltage</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BSS84</strong></td>
+<td>50V</td>
+<td>130mA</td>
+<td>3Ω</td>
+<td>-0.8V ... -2V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>NDS332P</strong></td>
+<td>20V</td>
+<td>700mA</td>
+<td>350mΩ</td>
+<td>-0.4V ... -1V</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2><a href="#bjts" aria-hidden="true" class="anchor" id="bjts"></a>BJTs</h2>
+<h3><a href="#npn" aria-hidden="true" class="anchor" id="npn"></a>NPN</h3>
+<table>
+<thead>
+<tr>
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Base-emitter on</th>
+<th>Gain</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MMBT3904</strong></td>
+<td>40V</td>
+<td>200mA</td>
+<td>0.65V ... 0.95V</td>
+<td>30 ... 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>MMBT2222</strong></td>
+<td>40V</td>
+<td>600mA</td>
+<td>0.6V ... 2.6V</td>
+<td>35 ... 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>FMMT617</strong></td>
+<td>15V</td>
+<td>3A</td>
+<td>0.8V ... 1V</td>
+<td>80 ... 400</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>2N3055</strong></td>
+<td>100V</td>
+<td>15A</td>
+<td>1.5V</td>
+<td>5 ... 80</td>
+<td>TO3</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a href="#pnp" aria-hidden="true" class="anchor" id="pnp"></a>PNP</h3>
+<table>
+<thead>
+<tr>
+<th><strong>Part #</strong></th>
+<th>Voltage rating</th>
+<th>Drain current</th>
+<th>Base-emitter on</th>
+<th>Gain</th>
+<th>Package</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MMBT3906</strong></td>
+<td>-40V</td>
+<td>-200mA</td>
+<td>-0.65V ... -0.95V</td>
+<td>30 ... 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>MMBT2907</strong></td>
+<td>-60V</td>
+<td>-600mA</td>
+<td>-0.4V ... -2.6V</td>
+<td>50 ... 100</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>FMMT617</strong></td>
+<td>-12V</td>
+<td>2.5A</td>
+<td>-0.8V ... -1V</td>
+<td>45 ... 475</td>
+<td>SOT23</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2><a href="#opamps" aria-hidden="true" class="anchor" id="opamps"></a>Opamps</h2>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/lm358.pdf">LM358 industry-standard dual opamp</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/lmv358a.pdf">LMV358 low-voltage rail-to-rail CMOS opamp</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/tl071a.pdf">TL0xx FET input opamp</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/op07c.pdf">OP07 precision opamp</a></li>
+</ul>
+<h2><a href="#comparators" aria-hidden="true" class="anchor" id="comparators"></a>Comparators</h2>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/lm393.pdf">LM393 dual comparator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/lmv331-n.pdf">LMVLM2903 dual low-voltage comparator</a></li>
+<li><a href="https://www.mouser.com/datasheet/2/389/cd00118313-1796660.pdf">TS3021 single high-speed rail-to-rail low-voltage comparator</a></li>
+</ul>
+<h2><a href="#regulators--refereces" aria-hidden="true" class="anchor" id="regulators--refereces"></a>Regulators &amp; refereces</h2>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/tlv1117.pdf">1117 adjustable &amp; fixed LDO regulator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/ua78.pdf">μA78xx fixed voltage regulator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/lm317.pdf">LM317 adjustable voltage regulator</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/tl431.pdf">TL431 adjustable voltage reference</a></li>
+<li><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/LM4040-41-Precision-Micropower-Shunt-Voltage-Reference-DS20005757B.pdf">LM4040/LM4041 adjustable voltage reference</a></li>
+<li><a href="https://www.analog.com/media/en/technical-documentation/data-sheets/REF01_02_03.pdf">REF01 precision voltage reference</a></li>
+</ul>
+<h2><a href="#timers" aria-hidden="true" class="anchor" id="timers"></a>Timers</h2>
+<ul>
+<li><a href="https://www.ti.com/product/NE555">555</a></li>
+<li><a href="https://www.analog.com/en/parametricsearch/11410#/">LTC699x &quot;TimerBlox&quot;</a></li>
+</ul>
+<h2><a href="#connectors" aria-hidden="true" class="anchor" id="connectors"></a>Connectors</h2>
+<ul>
+<li>DSUB</li>
+<li>Molex Mini-fit</li>
+<li>Molex Micro-fit</li>
+<li>...</li>
+</ul>
+<h2><a href="#switches--buttons" aria-hidden="true" class="anchor" id="switches--buttons"></a>Switches &amp; buttons</h2>
+<ul>
+<li><a href="https://omronfs.omron.com/en_US/ecb/products/pdf/en-b3f.pdf">Omron B3F</a></li>
+</ul>
+<h2><a href="#other" aria-hidden="true" class="anchor" id="other"></a>Other</h2>
+<ul>
+<li><a href="https://www.ti.com/lit/ds/symlink/cd4051b.pdf">CD4051/CD4052/CD4053 Analog Multiplexer Switch</a></li>
+</ul>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item><item><title>Planck keyboard cheat sheet</title><link>http:///reference-planck-keyboard-cheat-sheet.html</link><description><![CDATA["Cheat sheet my Planck keyboard keymap."]]></description><category>cheat sheet</category><category>keyboard</category><guid>http:///reference-planck-keyboard-cheat-sheet.html</guid><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><source url="http://">reference</source><content:encoded><![CDATA[<!-- Content Injected to every content markdown header -->
+<p><figure><img src="media/planck_keyboard_cheat_sheet/base.png" alt="Base layer (layer 0)" /></figure></p>
+<p><figure><img src="media/planck_keyboard_cheat_sheet/lower.png" alt="Lower layer (layer 1)" /></figure></p>
+<p><figure><img src="media/planck_keyboard_cheat_sheet/upper.png" alt="Upper layer (layer 2)" /></figure></p>
+<p><figure><img src="media/planck_keyboard_cheat_sheet/layer-3.png" alt="Layer 3" /></figure></p>
+<p><figure><img src="media/planck_keyboard_cheat_sheet/layer-4.png" alt="Layer 4" /></figure></p>
+<p><figure><img src="media/planck_keyboard_cheat_sheet/layer-5.png" alt="Layer 5" /></figure></p>
+<p>Repository: <a href="https://github.com/JorisL/Planck_QMK_config">https://github.com/JorisL/Planck_QMK_config</a></p>
+<!-- Content Injected to every content markdown footer -->
+]]></content:encoded></item></channel></rss>
